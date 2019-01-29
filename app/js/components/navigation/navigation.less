@@ -1,0 +1,78 @@
+.app-title {
+    line-height: 0;
+    padding-bottom: 15px;
+    padding-left: 16px;
+    padding-top: 15px;
+    margin-bottom: 0;
+    color: #FFF;
+}
+
+.navigation-notes {
+    box-sizing: border-box;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 12px;
+}
+
+
+.note-active {
+    background-color: #0052CC;
+    color: #fff;
+    border-radius: 5px;
+    hr {
+        display: none;
+    }
+}
+
+.note-inactive {
+    &:hover {
+        background-color: #2684FF;
+        color: #fff;
+        border-radius: 5px;
+        hr {
+            display: none;
+        }
+    }
+}
+
+.note {
+    cursor: pointer;
+    margin: 5px;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        .trash-note {
+            right: 10px;
+        }
+    }
+}
+
+.trash-note {
+    position: absolute;
+    color: white;
+    top: 10px;
+    right: -50px;
+    transition: right .5s, box-shadow 0.1s ease-in-out;
+    background-color: red;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1050;
+
+    &:hover {
+        box-shadow: 2px 4px 8px black;
+    }
+
+    &:active {
+        box-shadow: 2px 2px 8px black;
+    }
+}
+
+.primary-icon {
+    height: 35px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    border: 2px solid black;
+}

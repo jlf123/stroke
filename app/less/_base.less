@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+}
+
+.title-bar {
+    position: fixed;
+    height: 25px;
+    width: 100vw;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    cursor: pointer;
+}
+
+@font-family-charliesans: 'CharlieSans';
+
+@font-face {
+    font-family: 'CharlieSans';
+    src: url('./fonts/Charliesans/Charlie_Display-Regular.woff');
+    font-style: normal;
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'CharlieSans';
+    src: url('./fonts/Charliesans/Charlie_Display-Black.woff');
+    font-style: normal;
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'CharlieSans';
+    src: url('./fonts/Charliesans/Charlie_Display-Semibold.woff');
+    font-style: normal;
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'CharlieSans';
+    src: url('./fonts/Charliesans/Charlie_Display-Bold.woff');
+    font-weight: 800;
+    font-style: normal;
+}
+
+body {
+    font-family: @font-family-charliesans;
+    font-weight: 400;
+}
+
+h2 {
+    font-family: @font-family-charliesans;
+    font-weight: 500;
+    font-size: 2.4rem;
+    line-height: 32px;
+    color: #253858;
+    margin-bottom: 2.4rem;
+    letter-spacing: 0.3px;
+}
