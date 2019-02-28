@@ -32,7 +32,7 @@ export default connect(
                             <div
                                 style={{
                                     minHeight: '100vh',
-                                    backgroundColor: '#fff'
+                                    backgroundColor: '#ffff'
                                 }}
                             >
                                 {this.props.children}
