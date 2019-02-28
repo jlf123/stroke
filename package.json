@@ -7,9 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/webpack",
     "start": "electron .",
-    "dev": "./node_modules/.bin/webpack -d --watch --mode=development"
+    "dev": "./node_modules/.bin/webpack -d --watch --mode=development",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
   },
-  "author": "",
+  "author": "Jofo",
   "license": "MIT",
   "dependencies": {
     "@atlaskit/blanket": "^7.0.12",
@@ -27,6 +30,8 @@
     "debounce": "^1.2.0",
     "deep-freeze": "0.0.1",
     "electron-drag": "^1.2.2",
+    "electron-devtools-installer": "^2.2.4",
+    "electron-debug": "^1.1.0",
     "immer": "^1.9.3",
     "lodash": "^4.17.10",
     "moment": "^2.22.2",
@@ -59,14 +64,19 @@
     "babel-loader": "^8.0.0-beta.0",
     "css-loader": "^1.0.0",
     "devtron": "^1.4.0",
-    "electron": "^1.6.2",
-    "electron-debug": "^1.1.0",
-    "electron-devtools-installer": "^2.2.4",
+    "electron": "^4.0.6",
+    "electron-builder": "^20.38.5",
     "file-loader": "^2.0.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "style-loader": "^0.22.1",
     "webpack": "^4.17.1",
     "webpack-cli": "^3.1.0"
+  },
+  "build": {
+    "appId": "atlassian.stroke",
+    "mac": {
+      "category": "productivity"
+    }
   }
 }
