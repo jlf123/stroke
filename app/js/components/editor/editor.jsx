@@ -143,7 +143,7 @@ class StrokeEditorInner extends Component {
                     placeholder="Let's take some notes..."
                     contentComponents={
                         <TitleInput
-                            placeholder="Give this page a title..."
+                            placeholder="Give this note a title..."
                             value={title}
                             // tslint:disable-next-line:jsx-no-lambda
                             innerRef={this.handleTitleRef}
