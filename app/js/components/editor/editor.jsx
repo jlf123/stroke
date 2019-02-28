@@ -61,6 +61,7 @@ class StrokeEditorInner extends Component {
         this.setState({ disabled: false });
     }
     handleTitleRef(ref) {
+        console.log('title ref')
         if (ref) {
             ref.focus();
         }
@@ -152,6 +153,7 @@ class StrokeEditorInner extends Component {
                                 this.handleTitleOnChange(e, fabricActions, key)
                             }
                             onBlur={this.handleTitleOnBlur}
+                            id="note-title"
                         />
                     }
                     onChange={() => this.onChange(fabricActions, key, title)}
@@ -191,7 +193,9 @@ class StrokeEditor extends Component {
                                         addEditorActionsStroke={
                                             addEditorActionsStroke
                                         }
-                                        createNewUserNote={createNewUserNote}
+                                        createNewUserNote={
+                                            createNewUserNote
+                                        }
                                         switchActiveNoteSucceeded={
                                             switchActiveNoteSucceeded
                                         }
