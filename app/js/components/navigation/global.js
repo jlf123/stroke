@@ -40,7 +40,10 @@ export const globalNav = connect(
                 id: 'add',
                 icon: AddIcon,
                 tooltip: 'Add a new note',
-                onClick: () => createNewUserNote()
+                onClick: () => {
+                    document.getElementById("note-title");
+                    createNewUserNote();
+                }
             },
             {
                 id: 'trash',

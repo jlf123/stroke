@@ -99,7 +99,7 @@ const reducersByActionType = {
             ...setActiveNoteInactive(state.notes),
             [Moment().unix()]: {
                 value: body,
-                title: title ? title : 'untitled',
+                title: title ? title : '',
                 lastUpdatedAt: Moment().unix(),
                 active: true
             }
