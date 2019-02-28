@@ -1,5 +1,24 @@
 <html>
-<body>
-<h1>splashscreen placeholder</h1>
+<title>Stroke</title>
+<style>
+    body{
+        /*background-color: #0052CC;*/
+    }
+
+    .stroke-logo {
+        width: 120px;
+        height: 120px;
+        min-height: 100vh;
+        margin: auto auto;
+        -webkit-animation: spin 4s linear infinite;
+        -moz-animation: spin 4s linear infinite;
+        animation: spin 4s linear infinite;
+    }
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+</style>
+<body style="text-align: center">
+<img class="stroke-logo path" src="https://images.ctfassets.net/zsv3d0ugroxu/3WyidDXMDSYYigmuisSUYU/5aa013cdefeb32a6042d8a5c1851671e/AtlassianLogo_05b.svg" alt="Stroke logo" />
 </body>
 </html>

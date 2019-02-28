@@ -14,8 +14,8 @@ const createWindow = () => {
         },
         templateUrl: `${__dirname}/splash-screen.html`, // ${__dirname} == Users/egomez/AtlassianDev/stroke/app
         splashScreenOpts: {
-            width: 425,
-            height: 325
+            width: 1200,
+            height: 800
         }
     };
 
