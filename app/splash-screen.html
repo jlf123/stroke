@@ -1,8 +1,8 @@
 <html>
 <title>Stroke</title>
 <style>
-    body{
-        /*background-color: #0052CC;*/
+    body {
+        background-color: #0052CC;
     }
 
     .stroke-logo {
@@ -14,11 +14,29 @@
         -moz-animation: spin 4s linear infinite;
         animation: spin 4s linear infinite;
     }
-    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
-    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
-    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+    @-moz-keyframes spin {
+        100% {
+            -moz-transform: rotate(360deg);
+        }
+    }
+
+    @-webkit-keyframes spin {
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    @keyframes spin {
+        100% {
+            -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
 </style>
 <body style="text-align: center">
-<img class="stroke-logo path" src="https://images.ctfassets.net/zsv3d0ugroxu/3WyidDXMDSYYigmuisSUYU/5aa013cdefeb32a6042d8a5c1851671e/AtlassianLogo_05b.svg" alt="Stroke logo" />
+<img class="stroke-logo path"
+     src="https://images.ctfassets.net/zsv3d0ugroxu/3WyidDXMDSYYigmuisSUYU/5aa013cdefeb32a6042d8a5c1851671e/AtlassianLogo_05b.svg"
+     alt="Stroke logo"/>
 </body>
 </html>
