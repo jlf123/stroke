@@ -8,9 +8,16 @@ import { connect } from 'react-redux';
 import { fetchUserNotesRequested } from './state/actions';
 import { ProductNav } from './components/navigation/product';
 import { DeleteModal } from './components/delete';
+import { getRoute } from './state/selectors';
+import StrokeEditor from './components/editor';
+import TagsContainer from './components/tags/tags';
+
+const mapStateToProps = state => ({
+    route: getRoute(state)
+});
 
 export default connect(
-    null,
+    mapStateToProps,
     {
         fetchUserNotesRequested
     }
@@ -21,7 +28,8 @@ export default connect(
         }
 
         render() {
-            const { width } = this.props;
+            const { width, route } = this.props;
+            console.log('got the route: ', route)
             return (
                 <React.Fragment>
                     <NavigationProvider>
@@ -35,7 +43,8 @@ export default connect(
                                     backgroundColor: '#ffff'
                                 }}
                             >
-                                {this.props.children}
+                                {route === 'EDITOR' && <StrokeEditor />}
+                                {route === 'TAGS' && <TagsContainer />}
                             </div>
                         </LayoutManager>
                     </NavigationProvider>

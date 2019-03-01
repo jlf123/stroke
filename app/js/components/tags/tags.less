@@ -1,0 +1,34 @@
+.tags {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    &__note-container {
+        background-color: #f4f5f7;
+        color: rgb(52, 69, 99);
+        margin-top: 20px;
+        border-radius: 5px;
+        padding: 0px 8px 8px;
+        transition: background-color 200ms ease 0s;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #dfe1e6;
+        }
+    }
+
+    &__note-title {
+        margin: 0;
+        padding: 20px 10px 0;
+    }
+
+    &__note-inner {
+        background-color: white;
+
+        p {
+            min-height: 100px;
+            padding: 10px;
+        }
+    }
+}

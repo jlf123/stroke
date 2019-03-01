@@ -16,6 +16,7 @@ import {
 } from '../commands/transform-to-code-block';
 import { insertBlock } from '../commands/insert-block';
 import { safeInsert } from 'prosemirror-utils';
+import findIndex from 'lodash/findIndex';
 export function headingRule(nodeType, maxLevel) {
     return textblockTypeInputRule(
         new RegExp('^(#{1,' + maxLevel + '})\\s$'),
@@ -95,14 +96,32 @@ export function inputRulePlugin(schema) {
         );
     }
 
-    console.log('got the tag: ', schema.nodes.tag);
     rules.push(
         new InputRule(/^#([A-Z]|[a-z])+ /, (state, match, start, end) => {
+            const text = match[0].replace(/\s/g, '');
+
+            // get all the saved tags. Make sure that there is a unique array of tags stored
+            // in localstorage
+            setTimeout(() => {
+                const response = window.localStorage.getItem('tags');
+                const fetchedNotes = response ? JSON.parse(response) : [];
+                if (
+                    !fetchedNotes.length ||
+                    findIndex(fetchedNotes, text) === -1
+                ) {
+                    fetchedNotes.push(text);
+                    window.localStorage.setItem(
+                        'tags',
+                        JSON.stringify(fetchedNotes)
+                    );
+                }
+            });
+
             const tag = state.schema.nodes.tag.create();
             return state.tr.replaceWith(
                 start,
                 end,
-                state.config.schema.nodes.tag.create({ id: match[0] })
+                state.config.schema.nodes.tag.create({ id: text })
             );
         })
     );
