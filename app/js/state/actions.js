@@ -66,3 +66,17 @@ export const trashUserNoteRequested = (key, title) => ({
 export const trashUserNoteCanceled = () => ({
     type: ActionTypes.TRASH_USER_NOTE_CANCELED
 })
+
+export const tagsRequested = () => ({
+    type: ActionTypes.TAGS_REQUESTED
+})
+
+export const changeRoute = (route) => ({
+    type: ActionTypes.ROUTE_CHANGED,
+    route
+})
+
+export const tagRequestSucceeded = (tags) => ({
+    type: ActionTypes.TAGS_REQUESTED_SUCCEEDED,
+    tags
+})

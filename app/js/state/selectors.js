@@ -40,3 +40,9 @@ export const getEditorActions = state => state.state.actions;
 export const getIsReplacingDocument = state => state.state.isReplacingDocument;
 
 export const getIsDeletingNote = ({ state }) => state.isDeletingNote;
+
+export const getIsFetchingTags = ({ state }) => state.getIsFetchingTags;
+
+export const getTags = ({ state }) => state.tags
+
+export const getRoute = ({ state }) => state.route

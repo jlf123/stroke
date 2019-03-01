@@ -6,32 +6,37 @@ import {
     Item
 } from '@atlaskit/navigation-next';
 import { connect } from 'react-redux';
-import { getSortedNotes } from '../../state/selectors';
-import { switchActiveNote } from '../../state/actions';
+import { getSortedNotes, getRoute } from '../../state/selectors';
+import { switchActiveNote, changeRoute } from '../../state/actions';
 import EditorNoteIcon from '@atlaskit/icon/glyph/editor/note';
 import snippet from '../../util/snippet';
+import LabelIcon from '@atlaskit/icon/glyph/label';
 
 const mapStateToProps = state => ({
-    notes: getSortedNotes(state)
+    notes: getSortedNotes(state),
+    route: getRoute(state)
 });
 
-const renderNoteNav = (notes, select) =>
+const renderNoteNav = (notes, select, onTagRoute) =>
     notes.map(item => (
         <Item
             before={EditorNoteIcon}
             text={item.title}
-            isSelected={item.active}
+            isSelected={!onTagRoute && item.active}
             subText={snippet(item.value)}
-            onClick={() => select(item.key)}
+            onClick={() => {
+                select(item.key);
+            }}
         />
     ));
 
 export const ProductNav = connect(
     mapStateToProps,
     {
-        switchActiveNote
+        switchActiveNote,
+        changeRoute
     }
-)(({ notes, switchActiveNote }) => (
+)(({ notes, switchActiveNote, changeRoute, route }) => (
     <div>
         <HeaderSection>
             {() => (
@@ -43,9 +48,21 @@ export const ProductNav = connect(
         <MenuSection>
             {() => (
                 <div className="navigation-notes">
+                    <GroupHeading>Tags</GroupHeading>
+                    <Item
+                        before={LabelIcon}
+                        text={'Browse Tags'}
+                        isSelected={route === 'TAGS'}
+                        onClick={() => changeRoute('TAGS')}
+                    />
                     <GroupHeading>Notes</GroupHeading>
                     <div>
-                        {notes && renderNoteNav(notes, switchActiveNote)}
+                        {notes &&
+                            renderNoteNav(
+                                notes,
+                                switchActiveNote,
+                                route === 'TAGS'
+                            )}
                         {!notes && (
                             <p>
                                 You currently don't have any saved notes. Start
