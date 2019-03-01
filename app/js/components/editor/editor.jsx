@@ -61,7 +61,7 @@ class StrokeEditorInner extends Component {
         this.setState({ disabled: false });
     }
     handleTitleRef(ref) {
-        console.log('title ref')
+        console.log('title refz')
         if (ref) {
             ref.focus();
         }
