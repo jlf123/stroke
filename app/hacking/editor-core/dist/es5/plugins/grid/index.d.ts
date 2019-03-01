@@ -1,0 +1,11 @@
+import { PluginKey } from 'prosemirror-state';
+import { EditorPlugin } from '../../types';
+import { GridType } from './types';
+import { EventDispatcher } from '../../event-dispatcher';
+export declare const stateKey: PluginKey<any>;
+export declare const GRID_SIZE = 12;
+export declare const createDisplayGrid: (eventDispatcher: EventDispatcher) => (show: boolean, type: GridType, highlight?: number[] | string[]) => void;
+export declare const gridTypeForLayout: (layout: import("../../../../editor-common/node_modules/@atlaskit/adf-schema/src/schema/nodes/media-single").Layout) => GridType;
+declare const gridPlugin: EditorPlugin;
+export default gridPlugin;
+export { GRID_GUTTER } from './styles';

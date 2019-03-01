@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../../src/plugins/confluence-inline-comment/index.ts"],"names":[],"mappings":";;AACA,mDAA+D;AAE/D,yCAAyC;AACzC,IAAM,6BAA6B,GAAiB;IAClD,KAAK;QACH,OAAO;YACL;gBACE,IAAI,EAAE,yBAAyB;gBAC/B,IAAI,EAAE,oCAAuB;aAC9B;SACF,CAAC;IACJ,CAAC;CACF,CAAC;AAEF,kBAAe,6BAA6B,CAAC"}

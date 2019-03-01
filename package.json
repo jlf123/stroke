@@ -10,7 +10,8 @@
     "dev": "./node_modules/.bin/webpack -d --watch --mode=development",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "hack": "cp -r ./app/hacking/editor-core/dist/es2015/. ./node_modules/@atlaskit/editor-core/dist/es2015"
   },
   "author": "Jofo",
   "license": "MIT",
@@ -38,6 +39,7 @@
     "moment": "^2.22.2",
     "node-sass": "^4.9.3",
     "prop-types": "^15.5.7",
+    "prosemirror-inputrules": "^1.0.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-feel": "^1.0.30-rc2",
