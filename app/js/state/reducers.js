@@ -117,7 +117,7 @@ const reducersByActionType = {
                 [Moment().unix()]: {
                     value: body,
                     title: title ? title : '',
-                    lastUpdatedAt: Moment().unix(),
+                    lastUpdatedAt: null,
                     active: true
                 }
             },

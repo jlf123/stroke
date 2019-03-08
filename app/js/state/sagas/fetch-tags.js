@@ -10,30 +10,31 @@ import { traverse, reduce } from '@atlaskit/adf-utils/traverse.es';
 export function* fetchTags() {
     try {
         let fetchedNotes = yield select(getSortedNotes);
-        let fetchedTags = yield select(getTags);
-        if (!fetchedTags) {
-            const tagValues = yield call(getTagsFromLocalStorage);
-            fetchedTags = {};
-            fetchedNotes.map(({ value, title, key }) => {
-                traverse(value, {
-                    tag: (node, parent) => {
-                        const tagPayload = {
-                            title,
-                            id: key,
-                            text: reduce(parent.node, (acc, node) =>
+        let fetchedTags;
+        const tagValues = yield call(getTagsFromLocalStorage);
+        fetchedTags = {};
+        fetchedNotes.map(({ value, title, key }) => {
+            traverse(value, {
+                tag: (node, parent) => {
+                    const tagPayload = {
+                        title,
+                        id: key,
+                        text: reduce(
+                            parent.node,
+                            (acc, node) =>
                                 node.type === 'text'
                                     ? (acc += ` ${node.text}`)
-                                    : acc
-                            )
-                        };
-                        if (!fetchedTags[node.attrs.id]) {
-                            fetchedTags[node.attrs.id] = [];
-                        }
-                        fetchedTags[node.attrs.id].push(tagPayload);
+                                    : acc,
+                            ''
+                        )
+                    };
+                    if (!fetchedTags[node.attrs.id]) {
+                        fetchedTags[node.attrs.id] = [];
                     }
-                });
+                    fetchedTags[node.attrs.id].push(tagPayload);
+                }
             });
-        }
+        });
 
         const finalResponse = [];
 
@@ -41,7 +42,7 @@ export function* fetchTags() {
             finalResponse.push({
                 tag: key,
                 notes: fetchedTags[key]
-            })
+            });
         }
 
         yield put(Actions.tagRequestSucceeded(finalResponse));

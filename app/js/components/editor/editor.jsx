@@ -21,6 +21,8 @@ import {
 import FeelContext from 'react-feel';
 import _ from 'lodash';
 import TrashCan from '@atlaskit/icon/glyph/trash';
+import moment from 'moment';
+import EditorRecentIcon from '@atlaskit/icon/glyph/editor/recent';
 import './editor.less';
 
 export const TitleInput = styled.input`
@@ -61,7 +63,7 @@ class StrokeEditorInner extends Component {
         this.setState({ disabled: false });
     }
     handleTitleRef(ref) {
-        console.log('title refz')
+        console.log('title refz');
         if (ref) {
             ref.focus();
         }
@@ -104,8 +106,7 @@ class StrokeEditorInner extends Component {
         const { disabled } = this.state;
         const { fabricActions, activeNote } = this.props;
         const key = Object.keys(activeNote)[0];
-        const { title, value } = key ? activeNote[key] : {};
-        console.log('got the value: ', value);
+        const { title, value, lastUpdatedAt } = key ? activeNote[key] : {};
 
         return (
             <div>
@@ -142,7 +143,7 @@ class StrokeEditorInner extends Component {
                             : []
                     }
                     placeholder="Let's take some notes..."
-                    contentComponents={
+                    contentComponents={[
                         <TitleInput
                             placeholder="Give this note a title..."
                             value={title}
@@ -154,8 +155,36 @@ class StrokeEditorInner extends Component {
                             }
                             onBlur={this.handleTitleOnBlur}
                             id="note-title"
-                        />
-                    }
+                        />,
+                        <div className="stroke-date-container">
+                            <EditorRecentIcon />
+                            <div className="stroke-date">
+                                Created on:{' '}
+                                <span>
+                                    {key
+                                        ? moment
+                                              .unix(key)
+                                              .format('MMMM Do YYYY')
+                                        : moment().format('MMMM Do YYYY')}
+                                </span>
+                            </div>
+                            {lastUpdatedAt && (
+                                <React.Fragment>
+                                    <div style={{ margin: '0 10px' }}>
+                                        &#8226;
+                                    </div>
+                                    <div className="stroke-date">
+                                        Last updated at:{' '}
+                                        <span>
+                                            {moment
+                                                .unix(lastUpdatedAt)
+                                                .format('MMMM Do YYYY')}
+                                        </span>
+                                    </div>
+                                </React.Fragment>
+                            )}
+                        </div>
+                    ]}
                     onChange={() => this.onChange(fabricActions, key, title)}
                 />
             </div>
@@ -193,9 +222,7 @@ class StrokeEditor extends Component {
                                         addEditorActionsStroke={
                                             addEditorActionsStroke
                                         }
-                                        createNewUserNote={
-                                            createNewUserNote
-                                        }
+                                        createNewUserNote={createNewUserNote}
                                         switchActiveNoteSucceeded={
                                             switchActiveNoteSucceeded
                                         }
