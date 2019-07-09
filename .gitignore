@@ -4,4 +4,4 @@ node_modules
 .idea/
 dist/
 package/
-app/build/
+build/

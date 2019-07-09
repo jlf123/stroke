@@ -32,11 +32,6 @@
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn"
     },
-    "overrides": [{
-        "rules": {
-          "jest/valid-expect": 0
-        }
-    }],
     "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": 2017,
@@ -53,7 +48,7 @@
             }
         },
         "react": {
-            "version": "16.0" // React version, default to the latest React stable release
+            "version": "16.8.6" 
         }
     },
     "globals": {
