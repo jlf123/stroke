@@ -110,7 +110,7 @@ class StrokeEditorInner extends Component {
         const { title, value, lastUpdatedAt } = key ? activeNote[key] : {};
 
         return (
-            <div>
+            <div className="editor-wrapper">
                 <Editor
                     appearance="full-page"
                     allowTasksAndDecisions={true}
