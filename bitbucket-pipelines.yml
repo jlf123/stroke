@@ -12,3 +12,7 @@ pipelines:
         name: Build and deploy stroke
         script:
           - yarn dist
+
+definitions:
+  caches:
+    yarn: $HOME/.cache
