@@ -2,8 +2,6 @@ image: node:10.15.3
 
 pipelines:
   default:
-      - step:
-          - yarn test
     - step:
         caches:
           - node
