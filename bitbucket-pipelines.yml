@@ -4,3 +4,9 @@ pipelines:
   default:
       - step:
           - yarn test
+    - step:
+        caches:
+          - node
+        script:
+          - yarn
+          - yarn test
