@@ -3,8 +3,10 @@ image: node:10.15.3
 pipelines:
   default:
     - step:
-        name: Build and deploy stroke
+        name: Build Stroke
         script:
           - yarn
           - yarn dist
+        artifacts:
+          - dist/stroke-1.0.0.dmg
 
