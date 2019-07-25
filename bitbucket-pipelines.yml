@@ -10,3 +10,5 @@ pipelines:
           - yarn test
     - step:
         name: Build and deploy stroke
+        script:
+          - yarn dist
