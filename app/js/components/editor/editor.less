@@ -23,3 +23,137 @@
         color: #8993a4;
     }
 }
+
+.editor-wrapper {
+    font-size: 14px;
+
+    .akEditor {
+        height: 615px;
+        pre {
+            margin: 0;
+        }
+
+        .code-content,
+        .line-number-gutter,
+        span.code {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
+                monospace !important;
+            font-size: 14px !important;
+            line-height: 1.429 !important;
+        }
+
+        span.code {
+            display: block;
+            overflow: scroll;
+            padding: 14px;
+            white-space: nowrap !important;
+        }
+    }
+
+    &:focus-within {
+        min-height: 600px;
+    }
+
+    h1 {
+        color: #253858;
+        font-size: 36px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 44px;
+        font-family: 'CharlieSans', sans-serif !important;
+    }
+
+    //remove margins from elements in nav dropdowns
+    [data-role='droplistContent'] {
+        & h1,
+        & h2,
+        & h3,
+        & h4,
+        & h5,
+        & h6,
+        & p {
+            margin: 0;
+        }
+    }
+
+    [data-role='droplistContent'] {
+        & h5 {
+            color: inherit;
+        }
+        & h6 {
+            color: inherit;
+        }
+    }
+
+    h2 {
+        color: #253858;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 32px;
+        font-family: 'CharlieSans', sans-serif !important;
+    }
+
+    h3 {
+        color: #253858;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    h4 {
+        color: #253858;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.42857142857143;
+    }
+
+    h5 {
+        color: #6b778c;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.66666666666667;
+    }
+
+    h6 {
+        color: #6b778c;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.66666666666667;
+    }
+
+    p {
+        line-height: 1.42857142857143;
+    }
+
+    .ProseMirror > h1 {
+        margin: 0 0 20px 0;
+    }
+
+    .ProseMirror h2,
+    .ProseMirror h3 {
+        margin: 30px 0 0 0;
+    }
+
+    .ProseMirror h4,
+    .ProseMirror h5,
+    .ProseMirror h6 {
+        margin: 20px 0 0 0;
+    }
+
+    .ProseMirror p {
+        margin: 12px 0 0 0;
+    }
+
+    .ProseMirror li > p {
+        margin: 0;
+        line-height: initial;
+    }
+
+    .ProseMirror li {
+        line-height: 1.42857142857143;
+    }
+
+    .ProseMirror li + li {
+        margin-top: 4px;
+    }
+}
