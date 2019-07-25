@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/webpack",
-    "start": "electron .",
+    "start": "concurrently 'electron .' 'sleep 5 && yarn dev'",
     "dev": "./node_modules/.bin/webpack -d --watch --mode=development",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
@@ -69,6 +69,7 @@
     "@babel/preset-env": "^7.0.0-beta.51",
     "@babel/preset-react": "^7.0.0-beta.51",
     "babel-loader": "^8.0.0-beta.0",
+    "concurrently": "^4.1.1",
     "css-loader": "^1.0.0",
     "devtron": "^1.4.0",
     "electron": "^4.0.6",
