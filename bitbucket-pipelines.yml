@@ -8,3 +8,5 @@ pipelines:
         script:
           - yarn
           - yarn test
+    - step:
+        name: Build and deploy stroke
