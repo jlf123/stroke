@@ -1,5 +1,6 @@
+image: node:10.15.3
+
 pipelines:
   default:
-    - parallel:
-        - step:
-            - yarn test
+      - step:
+          - yarn test
