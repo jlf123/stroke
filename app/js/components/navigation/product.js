@@ -11,6 +11,7 @@ import { switchActiveNote, changeRoute } from '../../state/actions';
 import EditorNoteIcon from '@atlaskit/icon/glyph/editor/note';
 import snippet from '../../util/snippet';
 import LabelIcon from '@atlaskit/icon/glyph/label';
+import PluginsView from '../plugins/plugin';
 
 const mapStateToProps = state => ({
     notes: getSortedNotes(state),
@@ -55,6 +56,7 @@ export const ProductNav = connect(
                         isSelected={route === 'TAGS'}
                         onClick={() => changeRoute('TAGS')}
                     />
+                    <PluginsView />
                     <GroupHeading>Notes</GroupHeading>
                     <div>
                         {notes &&

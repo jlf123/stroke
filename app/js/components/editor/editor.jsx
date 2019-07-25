@@ -23,6 +23,7 @@ import _ from 'lodash';
 import TrashCan from '@atlaskit/icon/glyph/trash';
 import moment from 'moment';
 import EditorRecentIcon from '@atlaskit/icon/glyph/editor/recent';
+import PluginsView from '../plugins/plugin';
 import './editor.less';
 
 export const TitleInput = styled.input`
@@ -206,7 +207,7 @@ class StrokeEditor extends Component {
         } = this.props;
 
         return (
-            <div>
+            <div className="stroke-editor">
                 <EditorContext>
                     <WithEditorActions
                         render={actions => (

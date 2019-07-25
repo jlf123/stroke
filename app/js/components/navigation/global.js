@@ -6,6 +6,7 @@ import AddIcon from '@atlaskit/icon/glyph/add';
 import SearchIcon from '@atlaskit/icon/glyph/search';
 import TrashIcon from '@atlaskit/icon/glyph/trash';
 import { getActiveUserNote } from '../../state/selectors';
+import StrokeIcon from '../icon/icon';
 
 const mapStateToProps = state => ({
     active: getActiveUserNote(state)
@@ -24,10 +25,7 @@ export const globalNav = connect(
             {
                 id: 'stroke',
                 icon: () => (
-                    <img
-                        src="https://images.ctfassets.net/zsv3d0ugroxu/3WyidDXMDSYYigmuisSUYU/5aa013cdefeb32a6042d8a5c1851671e/AtlassianLogo_05b.svg"
-                        className="primary-icon"
-                    />
+                    <StrokeIcon src="https://images.ctfassets.net/zsv3d0ugroxu/3WyidDXMDSYYigmuisSUYU/5aa013cdefeb32a6042d8a5c1851671e/AtlassianLogo_05b.svg" />
                 )
             },
             {
@@ -41,7 +39,7 @@ export const globalNav = connect(
                 icon: AddIcon,
                 tooltip: 'Add a new note',
                 onClick: () => {
-                    document.getElementById("note-title");
+                    document.getElementById('note-title');
                     createNewUserNote();
                 }
             },
