@@ -8,5 +8,23 @@ pipelines:
           - yarn
           - yarn dist
         artifacts:
-          - dist/stroke-1.0.0.dmg
+          - dist/**
+    - step:
+        name: Deploy to development
+        script:
+          - pipe: atlassian/aws-s3-deploy:0.3.2
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: 'us-east-1'
+              S3_BUCKET: 'stroke-app-development'
+              LOCAL_PATH: 'dist'
+              # CONTENT_ENCODING: '<string>' # Optional.
+              # ACL: '<string>' # Optional.
+              # STORAGE_CLASS: '<string>' # Optional.
+              # CACHE_CONTROL: '<string>' # Optional.
+              # EXPIRES: '<timestamp>' # Optional.
+              # DELETE_FLAG: '<boolean>' # Optional.
+              # EXTRA_ARGS: '<string>' # Optional.
+              # DEBUG: '<boolean>' # Optional.
 
