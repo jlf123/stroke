@@ -56,7 +56,13 @@ export const ProductNav = connect(
                         isSelected={route === 'TAGS'}
                         onClick={() => changeRoute('TAGS')}
                     />
-                    <PluginsView />
+                    <PluginsView
+                        note={
+                            notes
+                                ? notes.filter(note => note.active)[0]
+                                : {}
+                        }
+                    />
                     <GroupHeading>Notes</GroupHeading>
                     <div>
                         {notes &&

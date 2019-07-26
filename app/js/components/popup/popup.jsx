@@ -1,9 +1,9 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import './popup.less';
 import TrashIcon from "@atlaskit/icon/glyph/trash";
 
-const StrokePopup = ({ container, title, close, view, deleteApp }) => {
+const StrokePopup = ({ container, title, close, view, deleteApp, note }) => {
     return useMemo(() => {
         const styles = {
             position: 'fixed',
@@ -20,6 +20,7 @@ const StrokePopup = ({ container, title, close, view, deleteApp }) => {
             boxShadow:
                 '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
         };
+
         return (
             <div className="popup" style={styles}>
                 <div className="popup__arrow" />
@@ -34,6 +35,22 @@ const StrokePopup = ({ container, title, close, view, deleteApp }) => {
                     src={view}
                     frameBorder="0"
                     id="popup-iframe"
+                    onLoad={() => {
+                        setTimeout(() => {
+                            document
+                                .getElementById('popup-iframe')
+                                .contentWindow.postMessage(
+                                    {
+                                        call: 'sendingNote',
+                                        value: {
+                                            title: note.title,
+                                            value: note.value
+                                        }
+                                    },
+                                    '*'
+                                );
+                        }, 1000);
+                    }}
                     style={{
                         flex: 1
                     }}

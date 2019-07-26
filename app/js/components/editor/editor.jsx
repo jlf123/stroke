@@ -23,7 +23,6 @@ import _ from 'lodash';
 import TrashCan from '@atlaskit/icon/glyph/trash';
 import moment from 'moment';
 import EditorRecentIcon from '@atlaskit/icon/glyph/editor/recent';
-import PluginsView from '../plugins/plugin';
 import AppExplorer from '../app-explorer/app-explorer';
 import './editor.less';
 
