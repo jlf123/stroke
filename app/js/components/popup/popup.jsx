@@ -3,7 +3,7 @@ import CrossIcon from '@atlaskit/icon/glyph/cross';
 import './popup.less';
 import TrashIcon from "@atlaskit/icon/glyph/trash";
 
-const StrokePopup = ({ container, title, close, view }) => {
+const StrokePopup = ({ container, title, close, view, deleteApp }) => {
     return useMemo(() => {
         const styles = {
             position: 'fixed',

@@ -67,9 +67,13 @@ const PluginsView = () => {
                             setShowPopup(false);
                         }}
                         deleteApp={() => {
-                            setApps(apps.filter(a => a !== activePlugin.appId))
-                            setActivePlugin(null);
-                            setShowPopup(false);
+                            const deleteApp = confirm(`Are you sure you want to delete ${activePlugin.title}?`)
+
+                            if (deleteApp) {
+                                setApps(apps.filter(a => a !== activePlugin.appId))
+                                setActivePlugin(null);
+                                setShowPopup(false);
+                            }
                         }}
                     />
                 )}
