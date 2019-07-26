@@ -7,8 +7,7 @@ import { useSavedApps } from '../../hooks/use-saved-apps';
 import firebase from '../../util/firebase';
 import AppExplorer from '../app-explorer/app-explorer';
 
-// AKA Apps View in Navigation
-const PluginsView = () => {
+const PluginsView = ({ note }) => {
     const [apps, setApps] = useSavedApps();
     const [plugins, setPlugins] = useState([]);
     const [activePlugin, setActivePlugin] = useState();
@@ -28,7 +27,6 @@ const PluginsView = () => {
                     }
                 })
             );
-            console.log('got the plugins: ', plugins);
             setPlugins(plugins);
         };
         loadApps();
@@ -61,6 +59,7 @@ const PluginsView = () => {
                             container={activePlugin.ref}
                             title={activePlugin.title}
                             view={activePlugin.view}
+                            note={note}
                             close={() => {
                                 setActivePlugin(null);
                                 setShowPopup(false);
