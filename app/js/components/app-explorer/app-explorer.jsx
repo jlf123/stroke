@@ -27,7 +27,7 @@ const AppExplorer = () => {
     }, []);
     return (
         <React.Fragment>
-            <Button appearance="primary" onClick={() => setShowModal(true)} className="margin-right">
+            <Button appearance="primary" onClick={() => setShowModal(true)} className="button__add-app">
                 Add an App
             </Button>
             <ModalTransition>
