@@ -20,11 +20,8 @@ import {
 } from '../../state/selectors';
 import FeelContext from 'react-feel';
 import _ from 'lodash';
-import TrashCan from '@atlaskit/icon/glyph/trash';
 import moment from 'moment';
 import EditorRecentIcon from '@atlaskit/icon/glyph/editor/recent';
-import PluginsView from '../plugins/plugin';
-import AppExplorer from '../app-explorer/app-explorer';
 import './editor.less';
 
 export const TitleInput = styled.input`
@@ -134,7 +131,6 @@ class StrokeEditorInner extends Component {
                     allowDate={true}
                     defaultValue={value}
                     disabled={disabled}
-                    primaryToolbarComponents={<AppExplorer />}
                     extensionHandlers={
                         this.props.fabricExtensionService
                             ? this.props.fabricExtensionService.getTransformers()
