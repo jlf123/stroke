@@ -6,6 +6,7 @@ import StrokePopup from '../popup/popup';
 import { useSavedApps } from '../../hooks/use-saved-apps';
 import firebase from '../../util/firebase';
 
+// AKA Apps View in Navigation
 const PluginsView = () => {
     const [apps, setApps] = useSavedApps();
     const [plugins, setPlugins] = useState([]);
@@ -22,7 +23,7 @@ const PluginsView = () => {
                         .doc(appId)
                         .get();
                     if (plugin.exists) {
-                        return plugin.data();
+                        return {...plugin.data(), appId};
                     }
                 })
             );
@@ -62,6 +63,11 @@ const PluginsView = () => {
                         title={activePlugin.title}
                         view={activePlugin.view}
                         close={() => {
+                            setActivePlugin(null);
+                            setShowPopup(false);
+                        }}
+                        deleteApp={() => {
+                            setApps(apps.filter(a => a !== activePlugin.appId))
                             setActivePlugin(null);
                             setShowPopup(false);
                         }}

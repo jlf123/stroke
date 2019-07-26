@@ -4,10 +4,9 @@ export const useSavedApps = () => {
     const apps = window.localStorage.getItem('apps');
     const [savedApps, setSavedApps] = useState(apps ? apps.split(',') : []);
 
-    const changeSavedApps = appId => {
-        const newApps = [...savedApps, appId]
-        setSavedApps(newApps);
-        window.localStorage.setItem('apps', newApps.join(','));
+    const changeSavedApps = appIds => {
+        setSavedApps(appIds);
+        window.localStorage.setItem('apps', appIds.join(','));
     };
     return [savedApps, changeSavedApps];
 };

@@ -1,6 +1,7 @@
 import React, { useMemo, useEffect } from 'react';
 import CrossIcon from '@atlaskit/icon/glyph/cross';
 import './popup.less';
+import TrashIcon from "@atlaskit/icon/glyph/trash";
 
 const StrokePopup = ({ container, title, close, view }) => {
     return useMemo(() => {
@@ -24,6 +25,7 @@ const StrokePopup = ({ container, title, close, view }) => {
                 <div className="popup__arrow" />
                 <div className="popup__header">
                     <div className="popup__title">{title}</div>
+                    <div className="popup__delete-app" onClick={deleteApp}><TrashIcon /></div>
                     <div className="popup__icon" onClick={close}>
                         <CrossIcon />
                     </div>
