@@ -68,7 +68,7 @@ const AppExplorer = () => {
                                         className="app-item__btn"
                                         onClick={() =>
                                             !isInstalled(installedApps, id) &&
-                                            setInstalledApps(id)
+                                            setInstalledApps([...installedApps, id])
                                         }
                                     >
                                         <Button
