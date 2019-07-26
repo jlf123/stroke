@@ -6,8 +6,7 @@ import StrokePopup from '../popup/popup';
 import { useSavedApps } from '../../hooks/use-saved-apps';
 import firebase from '../../util/firebase';
 
-// AKA Apps View in Navigation
-const PluginsView = () => {
+const PluginsView = ({ note }) => {
     const [apps, setApps] = useSavedApps();
     const [plugins, setPlugins] = useState([]);
     const [activePlugin, setActivePlugin] = useState();
@@ -23,11 +22,10 @@ const PluginsView = () => {
                         .doc(appId)
                         .get();
                     if (plugin.exists) {
-                        return {...plugin.data(), appId};
+                        return { ...plugin.data(), appId };
                     }
                 })
             );
-            console.log('got the plugins: ', plugins);
             setPlugins(plugins);
         };
         loadApps();
@@ -62,15 +60,22 @@ const PluginsView = () => {
                         container={activePlugin.ref}
                         title={activePlugin.title}
                         view={activePlugin.view}
+                        note={note}
                         close={() => {
                             setActivePlugin(null);
                             setShowPopup(false);
                         }}
                         deleteApp={() => {
-                            const deleteApp = confirm(`Are you sure you want to delete ${activePlugin.title}?`)
+                            const deleteApp = confirm(
+                                `Are you sure you want to delete ${
+                                    activePlugin.title
+                                }?`
+                            );
 
                             if (deleteApp) {
-                                setApps(apps.filter(a => a !== activePlugin.appId))
+                                setApps(
+                                    apps.filter(a => a !== activePlugin.appId)
+                                );
                                 setActivePlugin(null);
                                 setShowPopup(false);
                             }
