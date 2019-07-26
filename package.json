@@ -9,7 +9,7 @@
     "start": "concurrently 'yarn dev' 'sleep 5 && electron .'",
     "dev": "./node_modules/.bin/webpack -d --watch --mode=development",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder --macos",
+    "dist": "electron-builder --mac pkg",
     "postinstall": "electron-builder install-app-deps",
     "hack": "cp -r ./app/hacking/editor-core/dist/es2015/. ./node_modules/@atlaskit/editor-core/dist/es2015"
   },
