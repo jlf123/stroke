@@ -66,7 +66,7 @@ export const ProductNav = connect(
                                 route === 'TAGS'
                             )}
                         {!notes && (
-                            <p>
+                            <p style={{ padding: '0 12px' }}>
                                 You currently don't have any saved notes. Start
                                 taking notes now!
                             </p>

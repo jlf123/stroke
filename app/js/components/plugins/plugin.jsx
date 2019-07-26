@@ -1,49 +1,82 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import StrokeIcon from '../icon/icon';
 import { GroupHeading, Item } from '@atlaskit/navigation-next';
 import './plugin.less';
 import StrokePopup from '../popup/popup';
+import { useSavedApps } from '../../hooks/use-saved-apps';
+import firebase from '../../util/firebase';
 
+// AKA Apps View in Navigation
 const PluginsView = () => {
-    const [plugins, setPlugins] = useState([
-        {
-            id: '1234',
-            title: 'Stroke Confluence App',
-            description:
-                'This app provides an integration point between Stroke and Confluence Cloud',
-            icon: 'http://localhost:8080/icon',
-            view: 'http://localhost:8080/view'
-        }
-    ]);
+    const [apps, setApps] = useSavedApps();
+    const [plugins, setPlugins] = useState([]);
+    const [activePlugin, setActivePlugin] = useState();
     const [showPopup, setShowPopup] = useState(false);
-    const itemWrapperEl = useRef();
+
+    useEffect(() => {
+        const loadApps = async () => {
+            const db = firebase.firestore();
+            const plugins = await Promise.all(
+                apps.map(async appId => {
+                    const plugin = await db
+                        .collection('apps')
+                        .doc(appId)
+                        .get();
+                    if (plugin.exists) {
+                        return {...plugin.data(), appId};
+                    }
+                })
+            );
+            console.log('got the plugins: ', plugins);
+            setPlugins(plugins);
+        };
+        loadApps();
+    }, [apps]);
 
     if (!plugins.length) {
-        return;
+        return null;
     }
 
     return (
         <React.Fragment>
             <GroupHeading>Apps</GroupHeading>
             <React.Fragment>
-                {plugins.map(({ id, title, description, icon, view }) => (
-                    <div style={{ position: 'relative' }} ref={itemWrapperEl}>
-                        <Item
-                            before={() => <PluginIcon src={icon} />}
-                            text={title}
-                            onClick={() => setShowPopup(true)}
-                            subText={description}
-                        />
-                        {showPopup && (
-                            <StrokePopup
-                                container={itemWrapperEl}
-                                title={title}
-                                view={view}
-                                close={() => setShowPopup(false)}
+                {plugins.map(plugin => {
+                    const ref = React.createRef();
+                    return (
+                        <div style={{ position: 'relative' }} ref={ref}>
+                            <Item
+                                before={() => <PluginIcon src={plugin.icon} />}
+                                text={plugin.title}
+                                onClick={() => {
+                                    setActivePlugin({ ...plugin, ref });
+                                    setShowPopup(true);
+                                }}
+                                subText={plugin.description}
                             />
-                        )}
-                    </div>
-                ))}
+                        </div>
+                    );
+                })}
+                {showPopup && activePlugin && (
+                    <StrokePopup
+                        container={activePlugin.ref}
+                        title={activePlugin.title}
+                        view={activePlugin.view}
+                        close={() => {
+                            setActivePlugin(null);
+                            setShowPopup(false);
+                        }}
+                        deleteApp={() => {
+                            const deleteApp = confirm(`Are you sure you want to delete ${activePlugin.title}?`)
+
+                            if (deleteApp) {
+                                setApps(apps.filter(a => a !== activePlugin.appId))
+                                setActivePlugin(null);
+                                setShowPopup(false);
+                            }
+                        }}
+                    />
+                )}
             </React.Fragment>
         </React.Fragment>
     );
@@ -54,6 +87,7 @@ const PluginIcon = ({ src, onClick }) => (
         <img
             src={src}
             height="24"
+            width="24"
             onClick={() => {
                 onClick ? onClick() : null;
             }}
