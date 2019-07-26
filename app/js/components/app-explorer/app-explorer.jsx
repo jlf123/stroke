@@ -37,7 +37,10 @@ const AppExplorer = () => {
                         actions={[
                             {
                                 text: 'Close',
-                                onClick: () => setShowModal(false)
+                                onClick: () => {
+                                    setShowModal(false)
+                                    location.reload();
+                                }
                             }
                         ]}
                     >
