@@ -1,9 +1,8 @@
 const { join } = require('path'),
     webpack = require('webpack');
 
-
 module.exports = {
-    entry: join(__dirname, 'app/renderer.jsx'),
+    entry: ['@babel/polyfill', join(__dirname, 'app/renderer.jsx')],
     target: 'electron-renderer',
     output: {
         path: join(__dirname, 'app/build'),

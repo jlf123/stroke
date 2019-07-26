@@ -35,6 +35,8 @@
     "electron-debug": "^1.1.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-drag": "^1.2.2",
+    "firebase": "^6.3.2",
+    "firebase-admin": "^8.3.0",
     "history": "^4.7.2",
     "immer": "^1.9.3",
     "lodash": "^4.17.10",
