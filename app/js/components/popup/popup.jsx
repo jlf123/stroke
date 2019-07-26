@@ -31,7 +31,6 @@ const StrokePopup = ({ container, title, close, view }) => {
                 <iframe
                     src={view}
                     frameBorder="0"
-                    scrolling="no"
                     id="popup-iframe"
                     style={{
                         flex: 1
