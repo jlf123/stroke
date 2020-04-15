@@ -94,6 +94,9 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },
+  "resolutions": {
+    "prosemirror-model": "1.9.1"
+  },
   "build": {
     "appId": "atlassian.stroke",
     "mac": {

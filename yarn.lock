@@ -9419,11 +9419,6 @@ onetime@^5.1.0:
   dependencies:
     mimic-fn "^2.1.0"
 
-orderedmap@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/orderedmap/-/orderedmap-1.0.0.tgz#d90fc2ba1ed085190907d601dec6e6a53f8d41ba"
-  integrity sha1-2Q/Cuh7QhRkJB9YB3sbmpT+NQbo=
-
 orderedmap@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/orderedmap/-/orderedmap-1.1.1.tgz#c618e77611b3b21d0fe3edc92586265e0059c789"
@@ -10042,14 +10037,7 @@ prosemirror-markdown@^1.4.2:
     markdown-it "^10.0.0"
     prosemirror-model "^1.0.0"
 
-prosemirror-model@^1.0.0, prosemirror-model@^1.1.0:
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/prosemirror-model/-/prosemirror-model-1.6.3.tgz#9a416f907f5f650dfd6062643ce014bf0d0e8931"
-  integrity sha512-iqIml664X9MUVGLz2nzK4xfAofX8+o7gs2mi2/k+pVD0qZ7th1Jm5eG3AsqWoEUIZuWeaOWCKpBl/dPnhIIWew==
-  dependencies:
-    orderedmap "^1.0.0"
-
-prosemirror-model@^1.7.0:
+prosemirror-model@1.9.1, prosemirror-model@^1.0.0, prosemirror-model@^1.1.0, prosemirror-model@^1.7.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/prosemirror-model/-/prosemirror-model-1.9.1.tgz#8c08cf556f593c5f015548d2c1a6825661df087f"
   integrity sha512-Qblh8pm1c7Ll64sYLauwwzjimo/tFg1zW3Q3IWhKRhvfOEgRKqa6dC5pRrAa+XHOIjBFEYrqbi52J5bqA2dV8Q==
