@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Navigation, { AkContainerNavigation } from "@atlaskit/navigation";
 import AddIcon from "@atlaskit/icon/glyph/add";
-import ConfluenceIcon from "@atlaskit/icon/glyph/confluence";
 import SearchIcon from "@atlaskit/icon/glyph/search";
 import Tooltip from "@atlaskit/tooltip";
 import Page from "@atlaskit/page";

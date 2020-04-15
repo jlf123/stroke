@@ -5,7 +5,7 @@ import * as Actions from '../actions';
 import { TAGS_REQUESTED } from '../action-types';
 import { getSortedNotes, getTags } from '../selectors';
 import { getTagsFromLocalStorage } from '../../util/tags';
-import { traverse, reduce } from '@atlaskit/adf-utils/traverse.es';
+import { traverse, reduce } from '@atlaskit/adf-utils';
 
 export function* fetchTags() {
     try {
