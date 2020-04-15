@@ -3,7 +3,7 @@ const { app, BrowserWindow, clipboard, Menu } = require('electron'),
     url = require('url');
 const {
     default: installExtension,
-    REACT_DEVELOPER_TOOLS
+    REACT_DEVELOPER_TOOLS,
 } = require('electron-devtools-installer');
 const Splashscreen = require('@trodi/electron-splashscreen');
 
@@ -13,18 +13,21 @@ const createWindow = () => {
     const config = {
         windowOpts: {
             width: 1200,
-            height: 800
+            height: 800,
+            webPreferences: {
+                nodeIntegration: true,
+            },
         },
         templateUrl: `${__dirname}/splash-screen.html`, // ${__dirname} == Users/egomez/AtlassianDev/stroke/app
         splashScreenOpts: {
             width: 1200,
-            height: 800
-        }
+            height: 800,
+        },
     };
 
     installExtension(REACT_DEVELOPER_TOOLS)
-        .then(name => console.log(`Added Extension: ${name}`))
-        .catch(err => console.log('An error occured: ', err));
+        .then((name) => console.log(`Added Extension: ${name}`))
+        .catch((err) => console.log('An error occured: ', err));
 
     mainWindow = Splashscreen.initSplashScreen(config);
 
@@ -32,7 +35,7 @@ const createWindow = () => {
         url.format({
             pathname: path.join(__dirname, 'index.html'),
             protocol: 'file:',
-            slashes: true
+            slashes: true,
         })
     );
 
@@ -40,27 +43,59 @@ const createWindow = () => {
         mainWindow = null;
     });
 
-    var template = [{
-        label: "Application",
-        submenu: [
-            { label: "About Application", selector: "orderFrontStandardAboutPanel:" },
-            { type: "separator" },
-            { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
-        ]}, {
-        label: "Edit",
-        submenu: [
-            { label: "Undo", accelerator: "CmdOrCtrl+Z", selector: "undo:" },
-            { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", selector: "redo:" },
-            { type: "separator" },
-            { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-            { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-            { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-            { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-        ]}
+    var template = [
+        {
+            label: 'Application',
+            submenu: [
+                {
+                    label: 'About Application',
+                    selector: 'orderFrontStandardAboutPanel:',
+                },
+                { type: 'separator' },
+                {
+                    label: 'Quit',
+                    accelerator: 'Command+Q',
+                    click: function () {
+                        app.quit();
+                    },
+                },
+            ],
+        },
+        {
+            label: 'Edit',
+            submenu: [
+                {
+                    label: 'Undo',
+                    accelerator: 'CmdOrCtrl+Z',
+                    selector: 'undo:',
+                },
+                {
+                    label: 'Redo',
+                    accelerator: 'Shift+CmdOrCtrl+Z',
+                    selector: 'redo:',
+                },
+                { type: 'separator' },
+                { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
+                {
+                    label: 'Copy',
+                    accelerator: 'CmdOrCtrl+C',
+                    selector: 'copy:',
+                },
+                {
+                    label: 'Paste',
+                    accelerator: 'CmdOrCtrl+V',
+                    selector: 'paste:',
+                },
+                {
+                    label: 'Select All',
+                    accelerator: 'CmdOrCtrl+A',
+                    selector: 'selectAll:',
+                },
+            ],
+        },
     ];
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-
 };
 
 // this is fired when Electron finishes initialization
