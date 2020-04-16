@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
-import {
-    Editor,
-    EditorContext,
-    WithEditorActions
-} from '@atlaskit/editor-core';
-import autosave from '../../util/autosave';
-import styled from 'styled-components';
+import React, { Component } from 'react'
+import { Editor, EditorContext, WithEditorActions } from '@atlaskit/editor-core'
+import styled from 'styled-components'
 import {
     queueUserNoteUpdate,
     createNewUserNote,
     addEditorActionsStroke,
     switchActiveNoteSucceeded,
     saveUserNotesRequested
-} from '../../state/actions';
-import { connect } from 'react-redux';
+} from '../../state/actions'
+import { connect } from 'react-redux'
 import {
     getActiveUserNote,
-    getIsReplacingDocument
-} from '../../state/selectors';
-import FeelContext from 'react-feel';
-import _ from 'lodash';
-import moment from 'moment';
-import EditorRecentIcon from '@atlaskit/icon/glyph/editor/recent';
-import './editor.less';
+    getIsReplacingDocument,
+    getIsFetchingNotes
+} from '../../state/selectors'
+import FeelContext from 'react-feel'
+import debounce from 'lodash/debounce'
+import throttle from 'lodash/throttle'
+import moment from 'moment'
+import EditorRecentIcon from '@atlaskit/icon/glyph/editor/recent'
+import { StrokeLoading } from '../loading'
+import './editor.less'
 
 export const TitleInput = styled.input`
     border: none;
@@ -35,84 +33,86 @@ export const TitleInput = styled.input`
     &::placeholder {
         color: '#8B93A2';
     }
-`;
-TitleInput.displayName = 'TitleInput';
+`
+TitleInput.displayName = 'TitleInput'
 
 class StrokeEditorInner extends Component {
     constructor() {
-        super();
-        const autosave = _.debounce(this.onSaveHandler.bind(this), 1000);
-        //autosave.bind(this)
+        super()
+        const autosave = debounce(this.onSaveHandler.bind(this), 500)
+        // autosave.bind(this)
         this.state = {
             disabled: false,
             autosave
-        };
-        this.handleTitleOnBlur = this.handleTitleOnBlur.bind(this);
-        this.handleTitleOnFocus = this.handleTitleOnFocus.bind(this);
-        this.handleTitleRef = this.handleTitleRef.bind(this);
-        this.handleTitleOnChange = this.handleTitleOnChange.bind(this);
-        this.onChange = this.onChange.bind(this);
-        //this.onSaveHandler = this.onSaveHandler.bind(this)
-        //this.noteChangeHandler = this.noteChangeHandler.bind(this);
+        }
+        this.handleTitleOnBlur = this.handleTitleOnBlur.bind(this)
+        this.handleTitleOnFocus = this.handleTitleOnFocus.bind(this)
+        this.handleTitleRef = this.handleTitleRef.bind(this)
+        this.handleTitleOnChange = this.handleTitleOnChange.bind(this)
+        this.onChange = throttle(this.onChange.bind(this), 500)
     }
 
     handleTitleOnFocus() {
-        this.setState({ disabled: true });
+        this.setState({ disabled: true })
     }
+
     handleTitleOnBlur() {
-        this.setState({ disabled: false });
+        this.setState({ disabled: false })
     }
+
     handleTitleRef(ref) {
-        console.log('title refz');
         if (ref) {
-            ref.focus();
+            ref.focus()
         }
     }
 
     onChange(actions, key, title) {
-        this.noteChangeHandler(key, title, actions);
+        this.noteChangeHandler(key, title, actions)
     }
 
     handleTitleOnChange(event, actions, key) {
-        let title = event.target.value;
-        this.noteChangeHandler(key, title, actions);
+        const title = event.target.value
+        this.noteChangeHandler(key, title, actions)
     }
 
     onSaveHandler() {
-        this.props.saveUserNotesRequested();
+        this.props.saveUserNotesRequested()
     }
 
     noteChangeHandler(key, title, action) {
         if (this.props.isReplacingDocument) {
-            return this.props.switchActiveNoteSucceeded();
+            return this.props.switchActiveNoteSucceeded()
         }
 
-        action.getValue().then(value => {
+        action.getValue().then((value) => {
             if (!key) {
-                this.props.createNewUserNote(value, title);
+                this.props.createNewUserNote(value, title)
             } else {
-                this.props.queueUserNoteUpdate(key, value, title);
+                this.props.queueUserNoteUpdate(key, value, title)
             }
-            this.state.autosave();
-        });
+            this.state.autosave()
+        })
     }
 
     componentDidMount() {
         // add editor actions to the store and other components can update the editor
-        this.props.addEditorActionsStroke(this.props.fabricActions);
+        this.props.addEditorActionsStroke(this.props.fabricActions)
     }
 
     render() {
-        const { disabled } = this.state;
-        const { fabricActions, activeNote } = this.props;
-        const key = Object.keys(activeNote)[0];
-        const { title, value, lastUpdatedAt } = key ? activeNote[key] : {};
+        const { disabled } = this.state
+        const { fabricActions, activeNote, isLoading } = this.props
+        const key = Object.keys(activeNote)[0]
+        const { title, value, lastUpdatedAt } = key ? activeNote[key] : {}
+
+        if (isLoading) {
+            return <StrokeLoading />
+        }
 
         return (
             <div className="editor-wrapper">
                 <Editor
                     appearance="full-page"
-                    allowTasksAndDecisions={true}
                     allowCodeBlocks={{ enableKeybindingsForIDE: true }}
                     allowLists={true}
                     allowTextColor={true}
@@ -124,24 +124,16 @@ class StrokeEditorInner extends Component {
                         allowHeaderRow: true,
                         allowHeaderColumn: true,
                         permittedLayouts: 'all',
-                        stickToolbarToBottom: true
+                        stickToolbarToBottom: true,
+                        allowControls: true
                     }}
                     allowPanel={true}
                     allowRule={true}
                     allowDate={true}
                     defaultValue={value}
                     disabled={disabled}
-                    extensionHandlers={
-                        this.props.fabricExtensionService
-                            ? this.props.fabricExtensionService.getTransformers()
-                            : {}
-                    }
+                    quickInsert={true}
                     allowExtension={true}
-                    insertMenuItems={
-                        this.props.fabricExtensionService
-                            ? this.props.fabricExtensionService.getInsertMenuItems()
-                            : []
-                    }
                     placeholder="Let's take some notes..."
                     contentComponents={[
                         <TitleInput
@@ -150,13 +142,17 @@ class StrokeEditorInner extends Component {
                             // tslint:disable-next-line:jsx-no-lambda
                             innerRef={this.handleTitleRef}
                             onFocus={this.handleTitleOnFocus}
-                            onChange={e =>
+                            onChange={(e) =>
                                 this.handleTitleOnChange(e, fabricActions, key)
                             }
                             onBlur={this.handleTitleOnBlur}
                             id="note-title"
+                            key="note-title"
                         />,
-                        <div className="stroke-date-container">
+                        <div
+                            className="stroke-date-container"
+                            key="stroke-dates"
+                        >
                             <EditorRecentIcon />
                             <div className="stroke-date">
                                 Created on:{' '}
@@ -188,7 +184,7 @@ class StrokeEditorInner extends Component {
                     onChange={() => this.onChange(fabricActions, key, title)}
                 />
             </div>
-        );
+        )
     }
 }
 
@@ -201,45 +197,33 @@ class StrokeEditor extends Component {
             addEditorActionsStroke,
             isReplacingDocument,
             saveUserNotesRequested,
-            switchActiveNoteSucceeded
-        } = this.props;
+            switchActiveNoteSucceeded,
+            isLoading
+        } = this.props
 
         return (
             <div className="stroke-editor">
                 <EditorContext>
                     <WithEditorActions
-                        render={actions => (
-                            <FeelContext
-                                actions={actions}
-                                render={feel => (
-                                    <StrokeEditorInner
-                                        fabricExtensionService={feel}
-                                        fabricActions={actions}
-                                        activeNote={activeNote}
-                                        isReplacingDocument={
-                                            isReplacingDocument
-                                        }
-                                        addEditorActionsStroke={
-                                            addEditorActionsStroke
-                                        }
-                                        createNewUserNote={createNewUserNote}
-                                        switchActiveNoteSucceeded={
-                                            switchActiveNoteSucceeded
-                                        }
-                                        queueUserNoteUpdate={
-                                            queueUserNoteUpdate
-                                        }
-                                        saveUserNotesRequested={
-                                            saveUserNotesRequested
-                                        }
-                                    />
-                                )}
+                        render={(actions) => (
+                            <StrokeEditorInner
+                                fabricActions={actions}
+                                activeNote={activeNote}
+                                isReplacingDocument={isReplacingDocument}
+                                addEditorActionsStroke={addEditorActionsStroke}
+                                createNewUserNote={createNewUserNote}
+                                switchActiveNoteSucceeded={
+                                    switchActiveNoteSucceeded
+                                }
+                                queueUserNoteUpdate={queueUserNoteUpdate}
+                                saveUserNotesRequested={saveUserNotesRequested}
+                                isLoading={isLoading}
                             />
                         )}
                     />
                 </EditorContext>
             </div>
-        );
+        )
     }
 }
 
@@ -249,14 +233,12 @@ const mapDispatchToProps = {
     addEditorActionsStroke,
     switchActiveNoteSucceeded,
     saveUserNotesRequested
-};
+}
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     activeNote: getActiveUserNote(state),
-    isReplacingDocument: getIsReplacingDocument(state)
-});
+    isReplacingDocument: getIsReplacingDocument(state),
+    isLoading: getIsFetchingNotes(state)
+})
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(StrokeEditor);
+export default connect(mapStateToProps, mapDispatchToProps)(StrokeEditor)

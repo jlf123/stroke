@@ -1,15 +1,15 @@
 import { createSelector } from 'reselect'
 import { orderBy } from 'lodash'
 
-const strokeSelector = state => state.state
+const strokeSelector = (state) => state.state
 
-export const getIsFetchingNotes = state => state.isFetchingUserNotes
+export const getIsFetchingNotes = ({ state }) => state.isFetchingUserNotes
 
-export const getUserNotes = state => {
+export const getUserNotes = (state) => {
     return state.state.notes
 }
 
-export const getSortedNotes = state => {
+export const getSortedNotes = (state) => {
     const notes = getUserNotes(state)
     if (!notes) return null
     const sortedNotes = []
@@ -23,9 +23,9 @@ export const getSortedNotes = state => {
     return orderBy(sortedNotes, ['lastUpdatedAt'], ['desc'])
 }
 
-export const getShouldShowFetchNoteError = state => state.errorFetchingNotes
+export const getShouldShowFetchNoteError = (state) => state.errorFetchingNotes
 
-export const getActiveUserNote = state => {
+export const getActiveUserNote = (state) => {
     const notes = getUserNotes(state)
     if (!notes) return {}
     const active = {}
@@ -35,9 +35,9 @@ export const getActiveUserNote = state => {
     return active
 }
 
-export const getEditorActions = state => state.state.actions
+export const getEditorActions = (state) => state.state.actions
 
-export const getIsReplacingDocument = state => state.state.isReplacingDocument
+export const getIsReplacingDocument = (state) => state.state.isReplacingDocument
 
 export const getIsDeletingNote = ({ state }) => state.isDeletingNote
 

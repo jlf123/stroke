@@ -1,14 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './splash-screen.less';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { StrokeLoading } from '../js/components/loading'
+import './splash-screen.less'
 
 const SplashScreen = () => (
-    <div class="container">
-        <div class="splashscreen">
-            <div className="splashscreen__stroke-icon"></div>
-            <div className="splashscreen__pencil"></div>
-        </div>
+    <div className="container">
+        <StrokeLoading />
     </div>
-);
+)
 
-ReactDOM.render((<SplashScreen />), document.querySelector('#app'));
+ReactDOM.render(<SplashScreen />, document.querySelector('#app'))

@@ -86,43 +86,6 @@ class StrokeNavigation extends Component {
         console.log('got the notes: ', notes);
 
         return <div></div>;
-
-        /*
-    return (
-      <Navigation
-        globalCreateIcon={
-          <GlobalCreateIcon
-            openDrawer={this.openDrawer}
-            onCreate={() => this.onCreate()}
-          />
-        }
-        containerHeaderComponent={() => (
-          <h2 style={{ position: "relative", top: "-20px" }}>Stroke</h2>
-        )}
-        isOpen={isOpen}
-        width={width}
-        onResize={onNavResize}
-        globalPrimaryIcon={
-          <img
-            src="https://images.ctfassets.net/zsv3d0ugroxu/3WyidDXMDSYYigmuisSUYU/5aa013cdefeb32a6042d8a5c1851671e/AtlassianLogo_05b.svg"
-            className="primary-icon"
-          />
-        }
-      >
-        <AkContainerNavigation>
-          <div style={styles.noteNav}>
-            {notes && this.renderNoteNav(notes, switchActiveNote)}
-            {!notes && (
-              <p>
-                You currently don't have any saved notes. Start taking notes
-                now!
-              </p>
-            )}
-          </div>
-        </AkContainerNavigation>
-      </Navigation>
-    );
-    */
     }
 }
 

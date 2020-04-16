@@ -1,19 +1,28 @@
 module.exports = {
     env: {
         browser: true,
-        es6: true,
+        es6: true
     },
-    extends: ['plugin:react/recommended', 'standard'],
+    extends: [
+        'eslint:recommended',
+        'plugin:react/recommended',
+        'prettier',
+        'prettier/react',
+        'plugin:jest/recommended',
+        'plugin:import/react',
+        'plugin:import/recommended',
+        'plugin:unicorn/recommended'
+    ],
     globals: {
         Atomics: 'readonly',
-        SharedArrayBuffer: 'readonly',
+        SharedArrayBuffer: 'readonly'
     },
     parserOptions: {
         ecmaFeatures: {
-            jsx: true,
+            jsx: true
         },
         ecmaVersion: 2018,
-        sourceType: 'module',
+        sourceType: 'module'
     },
     plugins: ['react'],
     rules: {
@@ -47,7 +56,6 @@ module.exports = {
         'no-unused-expressions': 'off',
         'react/no-deprecated': 'warn',
         'react/prop-types': 'error',
-        'react-hooks/rules-of-hooks': 'error',
-        'react-hooks/exhaustive-deps': 'warn',
-    },
-};
+        'space-before-function-paren': ['error', 'never']
+    }
+}

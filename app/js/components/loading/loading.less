@@ -1,0 +1,68 @@
+.stroke-loading {
+    position: relative;
+
+    &__stroke-icon {
+        background: url(../../../images/stroke.svg);
+        background-size: cover;
+        height: 350px;
+        width: 350px;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+            height: 100%;
+            width: 100%;
+            content: ' ';
+            background-color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(45deg) scale(1.5);
+            animation: reveal 3s infinite linear;
+        }
+    }
+
+    &__pencil {
+        background-image: url(../../../images/pencil.svg);
+        height: 50px;
+        width: 50px;
+        position: absolute;
+        top: -50px;
+        left: 0;
+        animation: draw 3s infinite;
+    }
+}
+
+@keyframes reveal {
+    100% {
+        top: calc(100% + 20px);
+        left: calc(100% + 20px);
+    }
+}
+
+@keyframes draw {
+    20% {
+        top: calc(25% - 50px);
+        left: 0;
+    }
+
+    40% {
+        top: -50px;
+        left: calc(100% - 50px);
+    }
+
+    60% {
+        top: 100%;
+        left: 0;
+    }
+
+    80% {
+        top: 50%;
+        left: 100%;
+    }
+
+    100% {
+        top: calc(100% - 50px);
+        left: calc(100% - 25px);
+    }
+}
