@@ -5,8 +5,8 @@ import './splash-screen.less';
 const SplashScreen = () => (
     <div class="container">
         <div class="splashscreen">
-            <div class="splashscreen__stroke-icon"></div>
-            <div class="splashscreen__pencil"></div>
+            <div className="splashscreen__stroke-icon"></div>
+            <div className="splashscreen__pencil"></div>
         </div>
     </div>
 );
