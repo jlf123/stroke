@@ -1,47 +1,47 @@
-import { createSelector } from 'reselect';
-import { orderBy } from 'lodash';
+import { createSelector } from 'reselect'
+import { orderBy } from 'lodash'
 
-const strokeSelector = state => state.state;
+const strokeSelector = state => state.state
 
-export const getIsFetchingNotes = state => state.isFetchingUserNotes;
+export const getIsFetchingNotes = state => state.isFetchingUserNotes
 
 export const getUserNotes = state => {
-    return state.state.notes;
-};
+    return state.state.notes
+}
 
 export const getSortedNotes = state => {
-    let notes = getUserNotes(state);
-    if (!notes) return null;
-    let sortedNotes = [];
+    const notes = getUserNotes(state)
+    if (!notes) return null
+    const sortedNotes = []
     // convert object into a collection to be sorted
-    for (let key in notes) {
+    for (const key in notes) {
         sortedNotes.push({
             key,
             ...notes[key]
-        });
+        })
     }
-    return orderBy(sortedNotes, ['lastUpdatedAt'], ['desc']);
-};
+    return orderBy(sortedNotes, ['lastUpdatedAt'], ['desc'])
+}
 
-export const getShouldShowFetchNoteError = state => state.errorFetchingNotes;
+export const getShouldShowFetchNoteError = state => state.errorFetchingNotes
 
 export const getActiveUserNote = state => {
-    let notes = getUserNotes(state);
-    if (!notes) return {};
-    let active = {};
+    const notes = getUserNotes(state)
+    if (!notes) return {}
+    const active = {}
     Object.keys(notes).map((key, index) => {
-        if (notes[key].active) active[key] = notes[key];
-    });
-    return active;
-};
+        if (notes[key].active) active[key] = notes[key]
+    })
+    return active
+}
 
-export const getEditorActions = state => state.state.actions;
+export const getEditorActions = state => state.state.actions
 
-export const getIsReplacingDocument = state => state.state.isReplacingDocument;
+export const getIsReplacingDocument = state => state.state.isReplacingDocument
 
-export const getIsDeletingNote = ({ state }) => state.isDeletingNote;
+export const getIsDeletingNote = ({ state }) => state.isDeletingNote
 
-export const getIsFetchingTags = ({ state }) => state.getIsFetchingTags;
+export const getIsFetchingTags = ({ state }) => state.getIsFetchingTags
 
 export const getTags = ({ state }) => state.tags
 

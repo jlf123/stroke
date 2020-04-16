@@ -1,4 +1,0 @@
-import { EditorState, Transaction, Selection } from 'prosemirror-state';
-export declare const isHeaderRowSelected: (state: EditorState<any>) => boolean;
-export declare const isSelectionUpdated: (oldSelection: Selection<any>, newSelection: Selection<any>) => boolean;
-export declare const normalizeSelection: (tr: Transaction<any>) => Transaction<any>;

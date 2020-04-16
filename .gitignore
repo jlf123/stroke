@@ -6,3 +6,4 @@ dist/
 package/
 app/build/
 env.sh
+yarn-error.log
