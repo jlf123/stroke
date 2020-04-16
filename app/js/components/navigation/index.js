@@ -1,2 +1,2 @@
-import StrokeNavigation from './navigation';
-export default StrokeNavigation;
+import StrokeNavigation from './navigation'
+export default StrokeNavigation

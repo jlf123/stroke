@@ -4,4 +4,4 @@ export const FIREBASE = {
     PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
     SENDER_ID: process.env.FIREBASE_SENDER_ID,
     DB_URL: process.env.FIREBASE_DB_URL
-};
+}

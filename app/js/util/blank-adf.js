@@ -1,10 +1,10 @@
 export const blankAdf = {
-    'version': 1,
-    'type': 'doc',
-    'content': [
+    version: 1,
+    type: 'doc',
+    content: [
         {
-            'type': 'paragraph',
-            'content': []
+            type: 'paragraph',
+            content: []
         }
     ]
-};
+}

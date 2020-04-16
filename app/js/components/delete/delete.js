@@ -1,13 +1,13 @@
-import React from 'react';
-import Modal from '@atlaskit/modal-dialog';
-import { connect } from 'react-redux';
-import { trashUserNote, trashUserNoteCanceled } from '../../state/actions';
-import { getIsDeletingNote, getActiveUserNote } from '../../state/selectors';
+import React from 'react'
+import Modal from '@atlaskit/modal-dialog'
+import { connect } from 'react-redux'
+import { trashUserNote, trashUserNoteCanceled } from '../../state/actions'
+import { getIsDeletingNote, getActiveUserNote } from '../../state/selectors'
 
 const mapStateToProps = state => ({
     isVisible: getIsDeletingNote(state),
     active: getActiveUserNote(state)
-});
+})
 
 export const DeleteModal = connect(
     mapStateToProps,
@@ -16,7 +16,7 @@ export const DeleteModal = connect(
         trashUserNoteCanceled
     }
 )(({ title, active, trashUserNote, trashUserNoteCanceled, isVisible }) => {
-    const key = Object.keys(active)[0];
+    const key = Object.keys(active)[0]
     return (
         <React.Fragment>
             {isVisible && (
@@ -37,5 +37,5 @@ export const DeleteModal = connect(
                 </Modal>
             )}
         </React.Fragment>
-    );
-});
+    )
+})

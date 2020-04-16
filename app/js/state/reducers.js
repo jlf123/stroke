@@ -1,12 +1,12 @@
-import deepFreeze from 'deep-freeze';
-import map from 'lodash/map';
-import * as ActionType from './action-types';
-import Moment from 'moment';
-import { getActiveUserNote } from './selectors';
-import { blankAdf } from '../util/blank-adf';
-import _ from 'lodash';
+import deepFreeze from 'deep-freeze'
+import map from 'lodash/map'
+import * as ActionType from './action-types'
+import Moment from 'moment'
+import { getActiveUserNote } from './selectors'
+import { blankAdf } from '../util/blank-adf'
+import _ from 'lodash'
 
-const identity = state => state;
+const identity = state => state
 
 const createReducer = (actionTypeReducerMap, initialState) => (
     state = initialState,
@@ -16,9 +16,9 @@ const createReducer = (actionTypeReducerMap, initialState) => (
         action.type !== undefined &&
         actionTypeReducerMap[action.type] !== undefined
             ? actionTypeReducerMap[action.type]
-            : identity;
-    return reducer(state, action);
-};
+            : identity
+    return reducer(state, action)
+}
 
 const initialState = deepFreeze({
     notes: null,
@@ -33,34 +33,34 @@ const initialState = deepFreeze({
     tags: null,
     isFetchingTags: false,
     route: 'EDITOR'
-});
+})
 
 const setActiveNoteInactive = notes => {
     if (notes) {
         Object.keys(notes).map((key, value) => {
             if (notes[key].active) {
-                notes[key].active = false;
+                notes[key].active = false
             }
-        });
-        return notes;
+        })
+        return notes
     }
-};
+}
 
 const trashNote = (notes, key, actions) => {
     // add some extra logic
-    const trashingActiveNote = notes[key].active;
-    delete notes[key];
+    const trashingActiveNote = notes[key].active
+    delete notes[key]
     // add some extra logic when trashing an active note
     if (trashingActiveNote) {
-        let nowActive = Object.keys(notes)[0];
-        notes[nowActive].active = true;
-        replaceDocument(notes[nowActive].value, actions);
+        const nowActive = Object.keys(notes)[0]
+        notes[nowActive].active = true
+        replaceDocument(notes[nowActive].value, actions)
     }
-    return notes;
-};
+    return notes
+}
 
 const replaceDocument = (value, actions) =>
-    setTimeout(() => actions.replaceDocument(value));
+    setTimeout(() => actions.replaceDocument(value))
 
 const reducersByActionType = {
     [ActionType.FETCH_USER_NOTES_REQUESTED]: state => ({
@@ -88,7 +88,7 @@ const reducersByActionType = {
         state,
         { payload: { key, value, title } }
     ) => {
-        console.log('inside queue user update: ', title);
+        console.log('inside queue user update: ', title)
         return {
             ...state,
             notes: {
@@ -100,15 +100,15 @@ const reducersByActionType = {
                     active: true
                 }
             }
-        };
+        }
     },
     [ActionType.CREATE_NEW_USER_NOTE]: (
         state,
         { payload: { value, title } }
     ) => {
-        console.log('inside createNewUserNote');
-        const body = value ? value : blankAdf;
-        replaceDocument(body, state.actions);
+        console.log('inside createNewUserNote')
+        const body = value || blankAdf
+        replaceDocument(body, state.actions)
         return {
             ...state,
             route: 'EDITOR',
@@ -116,26 +116,26 @@ const reducersByActionType = {
                 ...setActiveNoteInactive(state.notes),
                 [Moment().unix()]: {
                     value: body,
-                    title: title ? title : '',
+                    title: title || '',
                     lastUpdatedAt: null,
                     active: true
                 }
             },
             isReplacingDocument: true
-        };
+        }
     },
     [ActionType.ADD_EDITOR_ACTIONS_STROKE]: (
         state,
         { payload: { actions } }
     ) => {
-        console.log('trying to add the editor actions: ', actions);
+        console.log('trying to add the editor actions: ', actions)
         return {
             ...state,
             actions: actions
-        };
+        }
     },
     [ActionType.SWITCH_ACTIVE_NOTE]: (state, { payload: { key } }) => {
-        replaceDocument(state.notes[key].value, state.actions);
+        replaceDocument(state.notes[key].value, state.actions)
         return {
             ...state,
             route: 'EDITOR',
@@ -147,7 +147,7 @@ const reducersByActionType = {
                 }
             },
             isReplacingDocument: true
-        };
+        }
     },
     [ActionType.SWITCH_ACTIVE_NOTE_SUCCEEDED]: state => ({
         ...state,
@@ -199,6 +199,6 @@ const reducersByActionType = {
         ...state,
         route
     })
-};
+}
 
-export default createReducer(reducersByActionType, initialState);
+export default createReducer(reducersByActionType, initialState)

@@ -1,22 +1,22 @@
-import React from 'react';
+import React from 'react'
 import {
     MenuSection,
     GroupHeading,
     HeaderSection,
     Item
-} from '@atlaskit/navigation-next';
-import { connect } from 'react-redux';
-import { getSortedNotes, getRoute } from '../../state/selectors';
-import { switchActiveNote, changeRoute } from '../../state/actions';
-import EditorNoteIcon from '@atlaskit/icon/glyph/editor/note';
-import snippet from '../../util/snippet';
-import LabelIcon from '@atlaskit/icon/glyph/label';
-import PluginsView from '../plugins/plugin';
+} from '@atlaskit/navigation-next'
+import { connect } from 'react-redux'
+import { getSortedNotes, getRoute } from '../../state/selectors'
+import { switchActiveNote, changeRoute } from '../../state/actions'
+import EditorNoteIcon from '@atlaskit/icon/glyph/editor/note'
+import snippet from '../../util/snippet'
+import LabelIcon from '@atlaskit/icon/glyph/label'
+import PluginsView from '../plugins/plugin'
 
 const mapStateToProps = state => ({
     notes: getSortedNotes(state),
     route: getRoute(state)
-});
+})
 
 const renderNoteNav = (notes, select, onTagRoute) =>
     notes.map(item => (
@@ -26,10 +26,10 @@ const renderNoteNav = (notes, select, onTagRoute) =>
             isSelected={!onTagRoute && item.active}
             subText={snippet(item.value)}
             onClick={() => {
-                select(item.key);
+                select(item.key)
             }}
         />
-    ));
+    ))
 
 export const ProductNav = connect(
     mapStateToProps,
@@ -82,4 +82,4 @@ export const ProductNav = connect(
             )}
         </MenuSection>
     </div>
-));
+))

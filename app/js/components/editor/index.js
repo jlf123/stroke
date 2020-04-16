@@ -1,2 +1,2 @@
-import StrokeEditor from './editor';
-export default StrokeEditor;
+import StrokeEditor from './editor'
+export default StrokeEditor

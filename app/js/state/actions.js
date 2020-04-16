@@ -1,37 +1,37 @@
-import * as ActionTypes from './action-types';
-import Moment from 'moment';
+import * as ActionTypes from './action-types'
+import Moment from 'moment'
 
 export const fetchUserNotesRequested = () => ({
     type: ActionTypes.FETCH_USER_NOTES_REQUESTED,
     payload: { }
-  });
-  
+})
+
 export const fetchUserNotesRequestSucceeded = notes => ({
     type: ActionTypes.FETCH_USER_NOTES_REQUEST_SUCCEEDED,
     payload: { notes }
-});
+})
 
 export const fetchUserNotesRequestFailed = error => ({
     type: ActionTypes.FETCH_USER_NOTES_REQUEST_FAILED,
     payload: { error }
-});
+})
 
 export const saveUserNotesRequested = () => ({
     type: ActionTypes.SAVE_USER_NOTES_REQUESTED
-});
+})
 
 export const saveUserNotesRequestSucceeded = () => ({
     type: ActionTypes.SAVE_USER_NOTES_REQUEST_SUCCEEDED
-});
+})
 
 export const saveUserNotesRequestFailed = error => ({
     type: ActionTypes.SAVE_USER_NOTES_REQUEST_FAILED,
     payload: { error }
-});
+})
 
 export const queueUserNoteUpdate = (key, value, title) => ({
     type: ActionTypes.QUEUE_USER_NOTES_UPDATE,
-    payload: { key, value, title } 
+    payload: { key, value, title }
 })
 
 export const createNewUserNote = (value, title) => ({
