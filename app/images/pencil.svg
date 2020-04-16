@@ -1,0 +1,17 @@
+<svg id="icons" 
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+    <title>pencil</title>
+    <g id="pencil">
+        <polygon points="10.01 43.01 2 46 4.98 37.99 5 38 10 43 10.01 43.01" fill="#2d346a"/>
+        <polygon points="14.37 33.63 20.02 39.28 10.01 43.01 10 43 5 38 4.98 37.99 8.72 27.97 14.37 33.63" fill="#fff"/>
+        <path d="M41.11,18.19,20,39.28l-5.65-5.65L39,9l5.6,5.6a5.32,5.32,0,0,1-.59.68L41.12,18.2Z" fill="#ffc12e"/>
+        <path d="M29.81,6.89,32.74,4a5.4,5.4,0,0,1,.69-.59L39,9,14.37,33.63,8.72,28Z" fill="#ffc12e"/>
+        <path d="M46,10.41a6.84,6.84,0,0,1-1.36,4.16L39,9,33.43,3.36c2.85-2.16,7.17-1.72,10,1.16A8.39,8.39,0,0,1,46,10.41Z" fill="#c3cce9"/>
+        <polyline points="41.43 17.86 20.02 39.28 8.72 27.97 30.14 6.57" fill="none" stroke="#2d346a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <path d="M29.81,6.89,32.74,4c2.81-2.81,7.62-2.55,10.74.57h0c3.12,3.12,3.38,7.93.57,10.73L41.12,18.2" fill="none" stroke="#2d346a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <polyline points="20.02 39.28 2 46 8.72 27.97" fill="none" stroke="#2d346a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <line x1="5" y1="38" x2="10" y2="43" fill="none" stroke="#2d346a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        <line x1="33.43" y1="3.36" x2="44.68" y2="14.61" fill="none" stroke="#2d346a" stroke-linejoin="round" stroke-width="2"/>
+        <line x1="14.37" y1="33.63" x2="39.04" y2="8.97" fill="none" stroke="#2d346a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+</svg>

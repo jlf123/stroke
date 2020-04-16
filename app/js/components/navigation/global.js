@@ -8,31 +8,30 @@ import TrashIcon from '@atlaskit/icon/glyph/trash';
 import { getActiveUserNote } from '../../state/selectors';
 import StrokeIcon from '../icon/icon';
 
-const mapStateToProps = state => ({
-    active: getActiveUserNote(state)
+const mapStateToProps = (state) => ({
+    active: getActiveUserNote(state),
 });
 
-export const globalNav = connect(
-    mapStateToProps,
-    {
-        createNewUserNote,
-        trashUserNoteRequested
-    }
-)(({ createNewUserNote, active, trashUserNoteRequested }) => (
+export const globalNav = connect(mapStateToProps, {
+    createNewUserNote,
+    trashUserNoteRequested,
+})(({ createNewUserNote, active, trashUserNoteRequested }) => (
     <GlobalNav
         secondaryItems={[]}
         primaryItems={[
             {
                 id: 'stroke',
                 icon: () => (
-                    <StrokeIcon src="https://images.ctfassets.net/zsv3d0ugroxu/3WyidDXMDSYYigmuisSUYU/5aa013cdefeb32a6042d8a5c1851671e/AtlassianLogo_05b.svg" />
-                )
+                    <div className="stroke-icon-container">
+                        <div className="stroke-icon" />
+                    </div>
+                ),
             },
             {
                 icon: SearchIcon,
                 id: 'search',
                 tooltip: 'Search',
-                onClick: () => console.log('Search item clicked', active)
+                onClick: () => console.log('Search item clicked', active),
             },
             {
                 id: 'add',
@@ -41,7 +40,7 @@ export const globalNav = connect(
                 onClick: () => {
                     document.getElementById('note-title');
                     createNewUserNote();
-                }
+                },
             },
             {
                 id: 'trash',
@@ -53,10 +52,10 @@ export const globalNav = connect(
                     console.log(key);
                     trashUserNoteRequested({
                         key,
-                        title
+                        title,
                     });
-                }
-            }
+                },
+            },
         ]}
     />
 ));
