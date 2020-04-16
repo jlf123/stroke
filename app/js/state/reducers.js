@@ -22,7 +22,7 @@ const createReducer = (actionTypeReducerMap, initialState) => (
 
 const initialState = deepFreeze({
     notes: null,
-    isFetchingUserNotes: false,
+    isFetchingUserNotes: true,
     errorFetchingNotes: null,
     isSavingUserNotes: false,
     errorSavingNotes: false,

@@ -6,6 +6,7 @@ const saveNote = (value, key) => {
 
 const saveNotes = (notes) => {
     if (notes) {
+        console.log('saving notes to localStorage', notes)
         window.localStorage.setItem('notes', JSON.stringify(notes))
     }
 }
