@@ -16,9 +16,10 @@ const createWindow = () => {
             height: 800,
             webPreferences: {
                 nodeIntegration: true,
+                webSecurity: false,
             },
         },
-        templateUrl: `${__dirname}/splash-screen.html`, // ${__dirname} == Users/egomez/AtlassianDev/stroke/app
+        templateUrl: `${__dirname}/build/splash-screen/index.html`,
         splashScreenOpts: {
             width: 1200,
             height: 800,
