@@ -12,7 +12,6 @@ const AppExplorer = () => {
     const [showModal, setShowModal] = useState(false);
     const [apps, setApps] = useState([]);
     const [installedApps, setInstalledApps] = useSavedApps();
-    console.log('got the saved apps ', installedApps);
     useEffect(() => {
         const db = firebase.firestore();
         const loadApps = async () => {

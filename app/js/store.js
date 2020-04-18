@@ -8,10 +8,10 @@ const sagaMiddleware = createSagaMiddleware()
 export default createStore(
     rootReducer,
     compose(
-        applyMiddleware(
-            sagaMiddleware
-        ),
-        window.devToolsExtension ? window.devToolsExtension() : f => f
+        applyMiddleware(sagaMiddleware),
+        window.__REDUX_DEVTOOLS_EXTENSION__
+            ? window.__REDUX_DEVTOOLS_EXTENSION__()
+            : (f) => f
     )
 )
 

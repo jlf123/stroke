@@ -6,8 +6,8 @@ import { TAGS_REQUESTED } from '../action-types'
 import { getSortedNotes, getTags } from '../selectors'
 import { getTagsFromLocalStorage } from '../../util/tags'
 import { traverse, reduce } from '@atlaskit/adf-utils'
-
-export function * fetchTags () {
+/*
+export function * fetchTags() {
     try {
         const fetchedNotes = yield select(getSortedNotes)
         let fetchedTags
@@ -21,10 +21,10 @@ export function * fetchTags () {
                         id: key,
                         text: reduce(
                             parent.node,
-                            (acc, node) =>
+                            (accumulator, node) =>
                                 node.type === 'text'
-                                    ? (acc += ` ${node.text}`)
-                                    : acc,
+                                    ? (accumulator += ` ${node.text}`)
+                                    : accumulator,
                             ''
                         )
                     }
@@ -46,11 +46,22 @@ export function * fetchTags () {
         }
 
         yield put(Actions.tagRequestSucceeded(finalResponse))
-    } catch (e) {
+    } catch (error) {
+        // yield put(Actions.fetchUserNotesRequestFailed(e))
+    }
+}
+*/
+
+export function* fetchTags() {
+    try {
+        const tagValues = yield call(getTagsFromLocalStorage)
+        yield put(Actions.tagRequestSucceeded(tagValues))
+    } catch (error) {
+        console.log(error);
         // yield put(Actions.fetchUserNotesRequestFailed(e))
     }
 }
 
-export default function * () {
+export default function* () {
     yield takeLatest(TAGS_REQUESTED, fetchTags)
 }

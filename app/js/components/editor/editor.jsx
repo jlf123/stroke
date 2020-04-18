@@ -14,12 +14,13 @@ import {
     getIsReplacingDocument,
     getIsFetchingNotes
 } from '../../state/selectors'
-import FeelContext from 'react-feel'
 import debounce from 'lodash/debounce'
 import throttle from 'lodash/throttle'
 import moment from 'moment'
 import EditorRecentIcon from '@atlaskit/icon/glyph/editor/recent'
 import { StrokeLoading } from '../loading'
+import { TagExtension } from '../tags/tag-extension'
+import { getAutoFormattingRules } from '../../util/get-autoformatting-rules'
 import './editor.less'
 
 export const TitleInput = styled.input`
@@ -60,9 +61,9 @@ class StrokeEditorInner extends Component {
         this.setState({ disabled: false })
     }
 
-    handleTitleRef(ref) {
-        if (ref) {
-            ref.focus()
+    handleTitleRef(reference) {
+        if (reference) {
+            reference.focus()
         }
     }
 
@@ -102,7 +103,9 @@ class StrokeEditorInner extends Component {
     render() {
         const { disabled } = this.state
         const { fabricActions, activeNote, isLoading } = this.props
-        const key = Object.keys(activeNote)[0]
+        let key = Object.keys(activeNote)[0]
+
+        window.ACTIVE_NOTE_KEY = key
         const { title, value, lastUpdatedAt } = key ? activeNote[key] : {}
 
         if (isLoading) {
@@ -134,6 +137,21 @@ class StrokeEditorInner extends Component {
                     disabled={disabled}
                     quickInsert={true}
                     allowExtension={true}
+                    extensionHandlers={{
+                        'com.stroke': (extension) => {
+                            if (extension.extensionKey === 'tag') {
+                                return (
+                                    <TagExtension
+                                        title={extension.parameters.title}
+                                    />
+                                )
+                            }
+                        }
+                    }}
+                    autoformattingProvider={getAutoFormattingRules(
+                        key,
+                        fabricActions
+                    )}
                     placeholder="Let's take some notes..."
                     contentComponents={[
                         <TitleInput
@@ -142,8 +160,12 @@ class StrokeEditorInner extends Component {
                             // tslint:disable-next-line:jsx-no-lambda
                             innerRef={this.handleTitleRef}
                             onFocus={this.handleTitleOnFocus}
-                            onChange={(e) =>
-                                this.handleTitleOnChange(e, fabricActions, key)
+                            onChange={(error) =>
+                                this.handleTitleOnChange(
+                                    error,
+                                    fabricActions,
+                                    key
+                                )
                             }
                             onBlur={this.handleTitleOnBlur}
                             id="note-title"
@@ -227,7 +249,7 @@ class StrokeEditor extends Component {
     }
 }
 
-const mapDispatchToProps = {
+const mapDispatchToProperties = {
     queueUserNoteUpdate,
     createNewUserNote,
     addEditorActionsStroke,
@@ -235,10 +257,13 @@ const mapDispatchToProps = {
     saveUserNotesRequested
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProperties = (state) => ({
     activeNote: getActiveUserNote(state),
     isReplacingDocument: getIsReplacingDocument(state),
     isLoading: getIsFetchingNotes(state)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(StrokeEditor)
+export default connect(
+    mapStateToProperties,
+    mapDispatchToProperties
+)(StrokeEditor)

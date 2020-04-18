@@ -1,19 +1,19 @@
 const snippet = (document) => {
-    if (!document) return ''
+    if (!document) {return ''}
     const snippetText = findFirstTextNode(document.content)
-    if (!snippetText) return ''
+    if (!snippetText) {return ''}
     return snippetText.split(' ').splice(0, 10).join(' ') + '...'
 }
 
 const findFirstTextNode = (content) => {
-    if (!content || !content.length) return
+    if (!content || !content.length) {return}
 
-    for (let i = 0; i < content.length; i++) {
-        if (content[i].type === 'text') {
-            return content[i].text
+    for (const element of content) {
+        if (element.type === 'text') {
+            return element.text
         }
-        if (content[i].content) {
-            return findFirstTextNode(content[i].content)
+        if (element.content) {
+            return findFirstTextNode(element.content)
         }
     }
 }

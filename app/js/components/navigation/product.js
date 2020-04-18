@@ -7,20 +7,20 @@ import {
 } from '@atlaskit/navigation-next'
 import { connect } from 'react-redux'
 import { getSortedNotes, getRoute } from '../../state/selectors'
-import { switchActiveNote, changeRoute } from '../../state/actions'
+import { switchActiveNote } from '../../state/actions'
 import EditorNoteIcon from '@atlaskit/icon/glyph/editor/note'
 import snippet from '../../util/snippet'
-import LabelIcon from '@atlaskit/icon/glyph/label'
 import PluginsView from '../plugins/plugin'
 
-const mapStateToProps = state => ({
+const mapStateToProperties = (state) => ({
     notes: getSortedNotes(state),
     route: getRoute(state)
 })
 
 const renderNoteNav = (notes, select, onTagRoute) =>
-    notes.map(item => (
+    notes.map((item) => (
         <Item
+            key={item.key}
             before={EditorNoteIcon}
             text={item.title}
             isSelected={!onTagRoute && item.active}
@@ -31,13 +31,9 @@ const renderNoteNav = (notes, select, onTagRoute) =>
         />
     ))
 
-export const ProductNav = connect(
-    mapStateToProps,
-    {
-        switchActiveNote,
-        changeRoute
-    }
-)(({ notes, switchActiveNote, changeRoute, route }) => (
+export const ProductNav = connect(mapStateToProperties, {
+    switchActiveNote
+})(({ notes, switchActiveNote, route }) => (
     <div>
         <HeaderSection>
             {() => (
@@ -49,18 +45,9 @@ export const ProductNav = connect(
         <MenuSection>
             {() => (
                 <div className="navigation-notes">
-                    <GroupHeading>Tags</GroupHeading>
-                    <Item
-                        before={LabelIcon}
-                        text={'Browse Tags'}
-                        isSelected={route === 'TAGS'}
-                        onClick={() => changeRoute('TAGS')}
-                    />
                     <PluginsView
                         note={
-                            notes
-                                ? notes.filter(note => note.active)[0]
-                                : {}
+                            notes ? notes.filter((note) => note.active)[0] : {}
                         }
                     />
                     <GroupHeading>Notes</GroupHeading>
@@ -73,8 +60,8 @@ export const ProductNav = connect(
                             )}
                         {!notes && (
                             <p style={{ padding: '0 12px' }}>
-                                You currently don't have any saved notes. Start
-                                taking notes now!
+                                You currently don&apos;t have any saved notes.
+                                Start taking notes now!
                             </p>
                         )}
                     </div>

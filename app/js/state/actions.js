@@ -1,17 +1,25 @@
 import * as ActionTypes from './action-types'
 import Moment from 'moment'
 
-export const fetchUserNotesRequested = () => ({
-    type: ActionTypes.FETCH_USER_NOTES_REQUESTED,
-    payload: { }
+export const openSearchDrawer = () => ({
+    type: ActionTypes.SEARCH_DRAWER_OPENED
 })
 
-export const fetchUserNotesRequestSucceeded = notes => ({
+export const closeSearchDrawer = () => ({
+    type: ActionTypes.SEARCH_DRAWER_CLOSED
+})
+
+export const fetchUserNotesRequested = () => ({
+    type: ActionTypes.FETCH_USER_NOTES_REQUESTED,
+    payload: {}
+})
+
+export const fetchUserNotesRequestSucceeded = (notes) => ({
     type: ActionTypes.FETCH_USER_NOTES_REQUEST_SUCCEEDED,
     payload: { notes }
 })
 
-export const fetchUserNotesRequestFailed = error => ({
+export const fetchUserNotesRequestFailed = (error) => ({
     type: ActionTypes.FETCH_USER_NOTES_REQUEST_FAILED,
     payload: { error }
 })
@@ -24,7 +32,7 @@ export const saveUserNotesRequestSucceeded = () => ({
     type: ActionTypes.SAVE_USER_NOTES_REQUEST_SUCCEEDED
 })
 
-export const saveUserNotesRequestFailed = error => ({
+export const saveUserNotesRequestFailed = (error) => ({
     type: ActionTypes.SAVE_USER_NOTES_REQUEST_FAILED,
     payload: { error }
 })
@@ -79,4 +87,9 @@ export const changeRoute = (route) => ({
 export const tagRequestSucceeded = (tags) => ({
     type: ActionTypes.TAGS_REQUESTED_SUCCEEDED,
     tags
+})
+
+export const setActiveTag = (tagName) => ({
+    type: ActionTypes.SET_ACTIVE_TAG,
+    tagName
 })
