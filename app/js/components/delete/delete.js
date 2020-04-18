@@ -4,13 +4,13 @@ import { connect } from 'react-redux'
 import { trashUserNote, trashUserNoteCanceled } from '../../state/actions'
 import { getIsDeletingNote, getActiveUserNote } from '../../state/selectors'
 
-const mapStateToProps = state => ({
+const mapStateToProperties = state => ({
     isVisible: getIsDeletingNote(state),
     active: getActiveUserNote(state)
 })
 
 export const DeleteModal = connect(
-    mapStateToProps,
+    mapStateToProperties,
     {
         trashUserNote,
         trashUserNoteCanceled

@@ -5,7 +5,7 @@ import * as Actions from '../actions'
 import { SAVE_USER_NOTES_REQUESTED } from '../action-types'
 import { getUserNotes } from '../selectors'
 
-export function * saveUserNotes () {
+export function * saveUserNotes() {
     try {
         const fetchedNotes = yield select(getUserNotes)
         if (!fetchedNotes) {
@@ -15,8 +15,8 @@ export function * saveUserNotes () {
         saveNotes(fetchedNotes)
 
         yield put(Actions.fetchUserNotesRequestSucceeded(fetchedNotes))
-    } catch (e) {
-        yield put(Actions.fetchUserNotesRequestFailed(e))
+    } catch (error) {
+        yield put(Actions.fetchUserNotesRequestFailed(error))
     }
 }
 

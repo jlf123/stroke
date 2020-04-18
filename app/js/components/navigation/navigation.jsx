@@ -83,7 +83,6 @@ class StrokeNavigation extends Component {
             createNewUserNote,
             switchActiveNote,
         } = this.props;
-        console.log('got the notes: ', notes);
 
         return <div></div>;
     }

@@ -11,6 +11,7 @@ import { DeleteModal } from './components/delete';
 import { getRoute } from './state/selectors';
 import StrokeEditor from './components/editor';
 import TagsContainer from './components/tags/tags';
+import SearchDrawer from './components/search-drawer';
 
 const mapStateToProps = state => ({
     route: getRoute(state)
@@ -29,7 +30,6 @@ export default connect(
 
         render() {
             const { width, route } = this.props;
-            console.log('got the route: ', route)
             return (
                 <React.Fragment>
                     <NavigationProvider>
@@ -49,6 +49,7 @@ export default connect(
                         </LayoutManager>
                     </NavigationProvider>
                     <DeleteModal />
+                    <SearchDrawer />
                 </React.Fragment>
             );
         }

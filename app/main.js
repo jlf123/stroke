@@ -3,7 +3,8 @@ const path = require('path')
 const url = require('url')
 const {
     default: installExtension,
-    REACT_DEVELOPER_TOOLS
+    REACT_DEVELOPER_TOOLS,
+    REDUX_DEVTOOLS
 } = require('electron-devtools-installer')
 const Splashscreen = require('@trodi/electron-splashscreen')
 
@@ -26,9 +27,15 @@ const createWindow = () => {
         }
     }
 
-    installExtension(REACT_DEVELOPER_TOOLS)
-        .then((name) => console.log(`Added Extension: ${name}`))
-        .catch((err) => console.log('An error occured: ', err))
+    app.whenReady().then(() => {
+        installExtension(REACT_DEVELOPER_TOOLS)
+            .then((name) => console.log(`Added Extension: ${name}`))
+            .catch((error) => console.log('An error occured:', error))
+
+        installExtension(REDUX_DEVTOOLS)
+            .then((name) => console.log(`Added Extension: ${name}`))
+            .catch((error) => console.log('An error occured:', error))
+    })
 
     mainWindow = Splashscreen.initSplashScreen(config)
 
@@ -56,7 +63,7 @@ const createWindow = () => {
                 {
                     label: 'Quit',
                     accelerator: 'Command+Q',
-                    click: function () {
+                    click: function() {
                         app.quit()
                     }
                 }

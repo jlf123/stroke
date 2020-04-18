@@ -1,12 +1,9 @@
 import deepFreeze from 'deep-freeze'
-import map from 'lodash/map'
 import * as ActionType from './action-types'
 import Moment from 'moment'
-import { getActiveUserNote } from './selectors'
 import { blankAdf } from '../util/blank-adf'
-import _ from 'lodash'
 
-const identity = state => state
+const identity = (state) => state
 
 const createReducer = (actionTypeReducerMap, initialState) => (
     state = initialState,
@@ -30,12 +27,14 @@ const initialState = deepFreeze({
     isReplacingDocument: false,
     isDeletingNote: false,
     pendingNoteDeletion: null,
-    tags: null,
+    tags: [],
     isFetchingTags: false,
-    route: 'EDITOR'
+    route: 'EDITOR',
+    isSearchDrawerOpen: false,
+    selectedTag: null
 })
 
-const setActiveNoteInactive = notes => {
+const setActiveNoteInactive = (notes) => {
     if (notes) {
         Object.keys(notes).map((key, value) => {
             if (notes[key].active) {
@@ -63,9 +62,17 @@ const replaceDocument = (value, actions) =>
     setTimeout(() => actions.replaceDocument(value))
 
 const reducersByActionType = {
-    [ActionType.FETCH_USER_NOTES_REQUESTED]: state => ({
+    [ActionType.FETCH_USER_NOTES_REQUESTED]: (state) => ({
         ...state,
         isFetchingUserNotes: true
+    }),
+    [ActionType.SEARCH_DRAWER_OPENED]: (state) => ({
+        ...state,
+        isSearchDrawerOpen: true
+    }),
+    [ActionType.SEARCH_DRAWER_CLOSED]: (state) => ({
+        ...state,
+        isSearchDrawerOpen: false
     }),
     [ActionType.FETCH_USER_NOTES_REQUEST_SUCCEEDED]: (
         state,
@@ -88,7 +95,6 @@ const reducersByActionType = {
         state,
         { payload: { key, value, title } }
     ) => {
-        console.log('inside queue user update: ', title)
         return {
             ...state,
             notes: {
@@ -106,7 +112,6 @@ const reducersByActionType = {
         state,
         { payload: { value, title } }
     ) => {
-        console.log('inside createNewUserNote')
         const body = value || blankAdf
         replaceDocument(body, state.actions)
         return {
@@ -128,7 +133,6 @@ const reducersByActionType = {
         state,
         { payload: { actions } }
     ) => {
-        console.log('trying to add the editor actions: ', actions)
         return {
             ...state,
             actions: actions
@@ -149,15 +153,15 @@ const reducersByActionType = {
             isReplacingDocument: true
         }
     },
-    [ActionType.SWITCH_ACTIVE_NOTE_SUCCEEDED]: state => ({
+    [ActionType.SWITCH_ACTIVE_NOTE_SUCCEEDED]: (state) => ({
         ...state,
         isReplacingDocument: false
     }),
-    [ActionType.SAVE_USER_NOTES_REQUESTED]: state => ({
+    [ActionType.SAVE_USER_NOTES_REQUESTED]: (state) => ({
         ...state,
         isSavingUserNotes: true
     }),
-    [ActionType.SAVE_USER_NOTES_REQUEST_SUCCEEDED]: state => ({
+    [ActionType.SAVE_USER_NOTES_REQUEST_SUCCEEDED]: (state) => ({
         ...state,
         isSavingUserNotes: false,
         errorSavingNotes: false
@@ -181,12 +185,12 @@ const reducersByActionType = {
             title
         }
     }),
-    [ActionType.TRASH_USER_NOTE_CANCELED]: state => ({
+    [ActionType.TRASH_USER_NOTE_CANCELED]: (state) => ({
         ...state,
         isDeletingNote: false,
         pendingNoteDeletion: null
     }),
-    [ActionType.TAGS_REQUESTED]: state => ({
+    [ActionType.TAGS_REQUESTED]: (state) => ({
         ...state,
         isFetchingTags: true
     }),
@@ -198,6 +202,10 @@ const reducersByActionType = {
     [ActionType.ROUTE_CHANGED]: (state, { route }) => ({
         ...state,
         route
+    }),
+    [ActionType.SET_ACTIVE_TAG]: (state, { tagName }) => ({
+        ...state,
+        selectedTag: tagName
     })
 }
 

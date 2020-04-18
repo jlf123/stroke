@@ -5,7 +5,7 @@ import * as Actions from '../actions'
 import { FETCH_USER_NOTES_REQUESTED } from '../action-types'
 import { getUserNotes } from '../selectors'
 
-export function * fetchUserNotes () {
+export function * fetchUserNotes() {
     try {
         // debugger;
         let fetchedNotes = yield select(getUserNotes)
@@ -14,8 +14,8 @@ export function * fetchUserNotes () {
         }
 
         yield put(Actions.fetchUserNotesRequestSucceeded(fetchedNotes))
-    } catch (e) {
-        yield put(Actions.fetchUserNotesRequestFailed(e))
+    } catch (error) {
+        yield put(Actions.fetchUserNotesRequestFailed(error))
     }
 }
 
