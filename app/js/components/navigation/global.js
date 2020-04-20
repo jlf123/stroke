@@ -10,7 +10,6 @@ import AddIcon from '@atlaskit/icon/glyph/add'
 import SearchIcon from '@atlaskit/icon/glyph/search'
 import TrashIcon from '@atlaskit/icon/glyph/trash'
 import { getActiveUserNote } from '../../state/selectors'
-import StrokeIcon from '../icon/icon'
 
 const mapStateToProperties = (state) => ({
     active: getActiveUserNote(state)

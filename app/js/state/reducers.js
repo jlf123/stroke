@@ -2,6 +2,7 @@ import deepFreeze from 'deep-freeze'
 import * as ActionType from './action-types'
 import Moment from 'moment'
 import { blankAdf } from '../util/blank-adf'
+import { map } from '@atlaskit/adf-utils'
 
 const identity = (state) => state
 
@@ -15,6 +16,22 @@ const createReducer = (actionTypeReducerMap, initialState) => (
             ? actionTypeReducerMap[action.type]
             : identity
     return reducer(state, action)
+}
+
+const isADFEmpty = (adfDocumentNode) => {
+    if (!adfDocumentNode) {
+        return true
+    }
+
+    if (
+        adfDocumentNode.content.length === 1 &&
+        adfDocumentNode.content[0].type === 'paragraph' &&
+        adfDocumentNode.content[0].content.length === 0
+    ) {
+        return true
+    }
+
+    return false
 }
 
 const initialState = deepFreeze({
@@ -95,6 +112,12 @@ const reducersByActionType = {
         state,
         { payload: { key, value, title } }
     ) => {
+        let searchableNoteText
+
+        if (!isADFEmpty(value)) {
+            searchableNoteText = map(value, (node) => node.text).join(' ')
+        }
+
         return {
             ...state,
             notes: {
@@ -103,7 +126,8 @@ const reducersByActionType = {
                     value,
                     title,
                     lastUpdatedAt: Moment().unix(),
-                    active: true
+                    active: true,
+                    searchableNoteText
                 }
             }
         }

@@ -63,7 +63,7 @@ const createWindow = () => {
                 {
                     label: 'Quit',
                     accelerator: 'Command+Q',
-                    click: function() {
+                    click: function () {
                         app.quit()
                     }
                 }
