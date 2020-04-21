@@ -137,6 +137,7 @@ class StrokeEditorInner extends Component {
                     disabled={disabled}
                     quickInsert={true}
                     allowExtension={true}
+                    allowTasksAndDecisions={true}
                     extensionHandlers={{
                         'com.stroke': (extension) => {
                             if (extension.extensionKey === 'tag') {

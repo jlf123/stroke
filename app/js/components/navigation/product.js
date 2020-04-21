@@ -45,11 +45,17 @@ export const ProductNav = connect(mapStateToProperties, {
         <MenuSection>
             {() => (
                 <div className="navigation-notes">
-                    <PluginsView
-                        note={
-                            notes ? notes.filter((note) => note.active)[0] : {}
-                        }
-                    />
+                    {/* eslint-disable-next-line no-undef */}
+                    {__flags__.APPS_ENABLED === 'true' && (
+                        <PluginsView
+                            note={
+                                notes
+                                    ? notes.filter((note) => note.active)[0]
+                                    : {}
+                            }
+                        />
+                    )}
+
                     <GroupHeading>Notes</GroupHeading>
                     <div>
                         {notes &&
