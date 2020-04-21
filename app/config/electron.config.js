@@ -11,6 +11,10 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             React: 'react'
+        }),
+        new webpack.DefinePlugin({
+            /* eslint-disable-next-line no-undef */
+            '__flags__.APPS_ENABLED': JSON.stringify(process.env.APPS_ENABLED)
         })
     ],
     module: {
