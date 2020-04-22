@@ -25,6 +25,7 @@ import lunr from 'lunr'
 import throttle from 'lodash/throttle'
 import snippet from '../../util/snippet'
 import EditorNoteIcon from '@atlaskit/icon/glyph/editor/note'
+import { TagsSearchContainer, TagsSearchList } from './tags'
 import './search-drawer.less'
 
 const search = throttle((index, query, setSearchResults) => {
@@ -48,6 +49,11 @@ const SearchDrawer = ({
     const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
+        // can't do anything if you don't have any notes
+        if (!notes) {
+            return
+        }
+
         // get all the available tags to display in the search drawer
         tagsRequested()
 
@@ -87,96 +93,62 @@ const SearchDrawer = ({
             onCloseComplete={closeSearchDrawer}
             width="wide"
         >
-            <div style={{ paddingLeft: '10px' }}>
-                {selectedTag ? (
-                    <React.Fragment>
-                        <div className="selected-tag-header">
-                            <LabelIcon
-                                label="Tag Icon"
-                                size="large"
-                                primaryColor="blue"
-                                secondaryColor="blue"
-                            />
-                            {selectedTag}
-                        </div>
-                        <div className="card-container">
-                            {noteTitleAndSnippets &&
-                                noteTitleAndSnippets.length &&
-                                noteTitleAndSnippets.map(
-                                    ({ title, snippet, id }, index) => (
-                                        <Card
-                                            title={title}
-                                            snippetAdf={snippet}
-                                            key={index}
-                                            onClick={() => {
-                                                setActiveTag(null)
-                                                closeSearchDrawer()
-                                                switchActiveNote(id)
-                                            }}
-                                        />
-                                    )
-                                )}
-                        </div>
-                    </React.Fragment>
-                ) : (
-                    <QuickSearch
-                        value={searchQuery}
-                        onSearchInput={({ target }) => {
-                            setSearchQuery(target.value)
-                        }}
-                    >
-                        {searchQuery ? (
-                            <ResultItemGroup title="Notes">
-                                {searchResults.length > 0 ? (
-                                    searchResults.map((key) => (
-                                        <ObjectResult
-                                            key={key}
-                                            name={notes[key].title}
-                                            containerName={snippet(
-                                                notes[key].value
-                                            )}
-                                            avatar={
-                                                <EditorNoteIcon label="Note Icon" />
-                                            }
-                                            onClick={() => {
-                                                closeSearchDrawer()
-                                                setSearchQuery('')
-                                                switchActiveNote(key)
-                                            }}
-                                        />
-                                    ))
-                                ) : (
-                                    <div>
-                                        No results yet, try refining your seach
-                                    </div>
-                                )}
-                            </ResultItemGroup>
-                        ) : (
-                            <ResultItemGroup title="Tags">
-                                {tags &&
-                                    tags.length &&
-                                    tags.map((tagName) => (
-                                        <ResultBase
-                                            key={tagName}
-                                            onClick={() =>
-                                                setActiveTag(tagName)
-                                            }
-                                            icon={
-                                                <LabelIcon
-                                                    label="Tag Icon"
-                                                    size="large"
-                                                    primaryColor="blue"
-                                                    secondaryColor="blue"
-                                                />
-                                            }
-                                            text={tagName}
-                                        />
-                                    ))}
-                            </ResultItemGroup>
-                        )}
-                    </QuickSearch>
-                )}
-            </div>
+            {!notes ? (
+                <div>You can&#39;t search if you don&#39;t have any notes 🤷‍♂️</div>
+            ) : (
+                <div style={{ paddingLeft: '10px' }}>
+                    {selectedTag ? (
+                        <TagsSearchContainer
+                            selectedTag={selectedTag}
+                            noteTitleAndSnippets={noteTitleAndSnippets}
+                            setActiveTag={setActiveTag}
+                            closeSearchDrawer={closeSearchDrawer}
+                            switchActiveNote={switchActiveNote}
+                        />
+                    ) : (
+                        <QuickSearch
+                            value={searchQuery}
+                            onSearchInput={({ target }) => {
+                                setSearchQuery(target.value)
+                            }}
+                        >
+                            {searchQuery ? (
+                                <ResultItemGroup title="Notes">
+                                    {searchResults.length > 0 ? (
+                                        searchResults.map((key) => (
+                                            <ObjectResult
+                                                key={key}
+                                                name={notes[key].title}
+                                                containerName={snippet(
+                                                    notes[key].value
+                                                )}
+                                                avatar={
+                                                    <EditorNoteIcon label="Note Icon" />
+                                                }
+                                                onClick={() => {
+                                                    closeSearchDrawer()
+                                                    setSearchQuery('')
+                                                    switchActiveNote(key)
+                                                }}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div>
+                                            No results yet, try refining your
+                                            seach
+                                        </div>
+                                    )}
+                                </ResultItemGroup>
+                            ) : (
+                                <TagsSearchList
+                                    tags={tags}
+                                    setActiveTag={setActiveTag}
+                                />
+                            )}
+                        </QuickSearch>
+                    )}
+                </div>
+            )}
         </Drawer>
     )
 }
