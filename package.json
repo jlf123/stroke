@@ -1,6 +1,6 @@
 {
     "name": "stroke",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "description": "",
     "main": "app/main.js",
     "repository": {
@@ -92,6 +92,7 @@
         "devtron": "^1.4.0",
         "electron": "^8.2.2",
         "electron-builder": "^22.4.1",
+        "electron-notarize": "^0.3.0",
         "electron-react-devtools": "^0.5.3",
         "electron-redux-devtools": "^0.3.4",
         "eslint": "^6.8.0",
@@ -122,9 +123,17 @@
     },
     "build": {
         "appId": "atlassian.stroke",
+        "afterSign": "notarize.js",
+        "dmg": {
+            "sign": false
+        },
         "mac": {
             "category": "productivity",
-            "publish": "github"
+            "publish": "github",
+            "hardenedRuntime": true,
+            "gatekeeperAssess": false,
+            "entitlements": "dist/entitlements.mac.plist",
+            "entitlementsInherit": "dist/entitlements.mac.plist"
         }
     }
 }
