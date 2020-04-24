@@ -7,6 +7,7 @@ const {
     REDUX_DEVTOOLS
 } = require('electron-devtools-installer')
 const Splashscreen = require('@trodi/electron-splashscreen')
+const { autoUpdater } = require('electron-updater')
 
 let mainWindow
 
@@ -49,6 +50,10 @@ const createWindow = () => {
 
     mainWindow.on('closed', () => {
         mainWindow = null
+    })
+
+    mainWindow.once('ready-to-show', () => {
+        autoUpdater.checkForUpdatesAndNotify()
     })
 
     const template = [
