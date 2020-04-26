@@ -7,3 +7,5 @@ package/
 app/build/
 env.sh
 yarn-error.log
+*.zip
+latest-mac.yml
