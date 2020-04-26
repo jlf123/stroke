@@ -1,6 +1,6 @@
 {
     "name": "stroke",
-    "version": "1.3.3",
+    "version": "1.3.5",
     "description": "",
     "main": "app/main.js",
     "repository": {
@@ -18,7 +18,9 @@
         "release": "electron-builder --publish=always",
         "postinstall": "electron-builder install-app-deps",
         "lint": "./node_modules/.bin/eslint . --fix",
-        "hack": "cp -r ./app/hacking/editor-core/dist/es2015/. ./node_modules/@atlaskit/editor-core/dist/es2015"
+        "hack": "cp -r ./app/hacking/editor-core/dist/es2015/. ./node_modules/@atlaskit/editor-core/dist/es2015",
+        "zip:app": "7z a stroke-$STROKE_RELEASE-mac.zip dist/mac/stroke.app",
+        "upload:zip": "node --max-old-space-size=4096 ./upload-assets.js"
     },
     "author": "Jofo",
     "license": "MIT",
@@ -110,9 +112,11 @@
         "eslint-plugin-unicorn": "^18.0.1",
         "file-loader": "^6.0.0",
         "html-webpack-plugin": "^4.2.0",
+        "js-yaml": "^3.13.1",
         "less": "^3.11.1",
         "less-loader": "^5.0.0",
         "npm-check-updates": "^4.1.2",
+        "octonode": "^0.9.5",
         "style-loader": "^1.1.3",
         "webpack": "^4.42.1",
         "webpack-cli": "^3.3.11",
@@ -132,8 +136,8 @@
             "publish": "github",
             "hardenedRuntime": true,
             "gatekeeperAssess": false,
-            "entitlements": "dist/entitlements.mac.plist",
-            "entitlementsInherit": "dist/entitlements.mac.plist"
+            "entitlements": "build/entitlements.mac.plist",
+            "entitlementsInherit": "build/entitlements.mac.plist"
         }
     }
 }

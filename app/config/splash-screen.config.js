@@ -66,10 +66,6 @@ module.exports = {
             }
         ]
     },
-    watch: true,
-    watchOptions: {
-        aggregateTimeout: 1000
-    },
     resolve: {
         extensions: ['.js', '.jsx']
     },
