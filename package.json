@@ -20,7 +20,7 @@
         "lint": "./node_modules/.bin/eslint . --fix",
         "hack": "cp -r ./app/hacking/editor-core/dist/es2015/. ./node_modules/@atlaskit/editor-core/dist/es2015",
         "zip:app": "7z a stroke-$STROKE_RELEASE-mac.zip dist/mac/stroke.app",
-        "upload:zip": "node --max-old-space-size=4096 ./upload-assets.js"
+        "upload:zip": "export NODE_OPTIONS=--max_old_space_size=4096 && node ./scripts/upload-assets.js"
     },
     "author": "Jofo",
     "license": "MIT",
@@ -136,8 +136,8 @@
             "publish": "github",
             "hardenedRuntime": true,
             "gatekeeperAssess": false,
-            "entitlements": "build/entitlements.mac.plist",
-            "entitlementsInherit": "build/entitlements.mac.plist"
+            "entitlements": "entitlements.mac.plist",
+            "entitlementsInherit": "entitlements.mac.plist"
         }
     }
 }

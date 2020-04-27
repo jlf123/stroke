@@ -4,6 +4,7 @@ const fs = require('fs')
 const yml = require('js-yaml')
 const github = require('octonode')
 const client = github.client()
+const path = require('path')
 
 const exportBlockMapData = () => {
     const blockMapData = JSON.parse(
@@ -16,9 +17,9 @@ const exportBlockMapData = () => {
     return blockMapData
 }
 
-const updateLatestYaml = ({ sha512, size, blockMapSize }) => {
+const updateLatestYaml = ({ sha512, size }) => {
     let latestYml = yml.safeLoad(
-        fs.readFileSync('./dist/latest-mac.yml', 'utf8')
+        fs.readFileSync(path.join(__dirname, '../dist/latest-mac.yml'), 'utf8')
     )
 
     latestYml.files[0] = {
@@ -29,15 +30,19 @@ const updateLatestYaml = ({ sha512, size, blockMapSize }) => {
 
     latestYml.sha512 = sha512
 
-    fs.writeFile('./latest-mac.yml', yml.safeDump(latestYml), (error) => {
-        if (error) {
-            console.log(error)
+    fs.writeFile(
+        path.join(__dirname, '../latest-mac.yml'),
+        yml.safeDump(latestYml),
+        (error) => {
+            if (error) {
+                console.log(error)
+            }
         }
-    })
+    )
 }
 
 const execute = async () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         updateLatestYaml(exportBlockMapData())
         client.get(
             '/repos/jlf123/stroke/releases',
@@ -62,8 +67,12 @@ const execute = async () => {
 
                 // load the files that we want to update
                 const appZipName = `stroke-${process.env.STROKE_RELEASE}-mac.zip`
-                const latestYml = fs.readFileSync('latest-mac.yml')
-                const appZip = fs.readFileSync(appZipName)
+                const latestYml = fs.readFileSync(
+                    path.join(__dirname, '../latest-mac.yml')
+                )
+                const appZip = fs.readFileSync(
+                    path.join(__dirname, '..', appZipName)
+                )
                 client.post(
                     `/repos/jlf123/stroke/releases/${releaseToUpdate.id}/assets`,
                     {
