@@ -5,8 +5,6 @@ jobs:
   build_macos:
     macos:
       xcode: "11.4.1"
-    executor:
-      name: node/default
     steps:
       - checkout
       - node/with-cache:
