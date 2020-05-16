@@ -9,3 +9,4 @@ env.sh
 yarn-error.log
 *.zip
 latest-mac.yml
+dist 2
