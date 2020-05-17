@@ -11,8 +11,7 @@ jobs:
           steps:
             - run: yarn
             - run: yarn build
-            - run: yarn config set version-sign-git-tag false
-            - run: yarn version
+            - run: yarn version --minor --no-git-tag-version
             - run: yarn release
             - run: yarn zip
             - run: yarn upload:zip
