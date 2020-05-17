@@ -4,21 +4,25 @@ const fs = require('fs')
 const yml = require('js-yaml')
 const github = require('octonode')
 const client = github.client()
+const path = require('path')
+const packageJson = require('../package.json');
+
+const STROKE_RELEASE = packageJson.version;
 
 const exportBlockMapData = () => {
     const blockMapData = JSON.parse(
         execSync(
             /* eslint-disable-next-line no-undef */
-            `./node_modules/app-builder-bin/mac/app-builder blockmap -i ./stroke-${process.env.STROKE_RELEASE}-mac.zip -o ./throwaway.zip`
+            `./node_modules/app-builder-bin/mac/app-builder blockmap -i ./stroke-${STROKE_RELEASE}-mac.zip -o ./throwaway.zip`
         ).toString()
     )
     console.log('got the block data', blockMapData)
     return blockMapData
 }
 
-const updateLatestYaml = ({ sha512, size, blockMapSize }) => {
+const updateLatestYaml = ({ sha512, size }) => {
     let latestYml = yml.safeLoad(
-        fs.readFileSync('./dist/latest-mac.yml', 'utf8')
+        fs.readFileSync(path.join(__dirname, '../dist/latest-mac.yml'), 'utf8')
     )
 
     latestYml.files[0] = {
@@ -29,15 +33,19 @@ const updateLatestYaml = ({ sha512, size, blockMapSize }) => {
 
     latestYml.sha512 = sha512
 
-    fs.writeFile('./latest-mac.yml', yml.safeDump(latestYml), (error) => {
-        if (error) {
-            console.log(error)
+    fs.writeFile(
+        path.join(__dirname, '../latest-mac.yml'),
+        yml.safeDump(latestYml),
+        (error) => {
+            if (error) {
+                console.log(error)
+            }
         }
-    })
+    )
 }
 
 const execute = async () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         updateLatestYaml(exportBlockMapData())
         client.get(
             '/repos/jlf123/stroke/releases',
@@ -46,7 +54,7 @@ const execute = async () => {
                     /* eslint-disable-next-line no-undef */
                     ({ name }) => {
                         console.log(name)
-                        return name === process.env.STROKE_RELEASE
+                        return name === STROKE_RELEASE
                     }
                 )
 
@@ -61,9 +69,13 @@ const execute = async () => {
                 console.log('found the release', releaseToUpdate.id)
 
                 // load the files that we want to update
-                const appZipName = `stroke-${process.env.STROKE_RELEASE}-mac.zip`
-                const latestYml = fs.readFileSync('latest-mac.yml')
-                const appZip = fs.readFileSync(appZipName)
+                const appZipName = `stroke-${STROKE_RELEASE}-mac.zip`
+                const latestYml = fs.readFileSync(
+                    path.join(__dirname, '../latest-mac.yml')
+                )
+                const appZip = fs.readFileSync(
+                    path.join(__dirname, '..', appZipName)
+                )
                 client.post(
                     `/repos/jlf123/stroke/releases/${releaseToUpdate.id}/assets`,
                     {
