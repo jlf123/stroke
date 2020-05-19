@@ -3,7 +3,7 @@ const { execSync } = require('child_process')
 const fs = require('fs')
 const yml = require('js-yaml')
 const github = require('octonode')
-const client = github.client()
+const client = github.client(process.env.GH_TOKEN)
 const path = require('path')
 const packageJson = require('../package.json');
 
