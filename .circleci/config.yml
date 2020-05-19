@@ -17,7 +17,7 @@ jobs:
             - run: yarn upload:zip
             - run: git add package.json
             - run: git commit -m "[skip ci] updated version"
-            - run: git push
+            - run: git push -u origin head
 workflows:
     build_macos:
       jobs:
