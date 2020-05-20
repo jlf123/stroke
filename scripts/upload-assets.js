@@ -5,9 +5,9 @@ const yml = require('js-yaml')
 const github = require('octonode')
 const client = github.client(process.env.GH_TOKEN)
 const path = require('path')
-const packageJson = require('../package.json');
+const packageJson = require('../package.json')
 
-const STROKE_RELEASE = packageJson.version;
+const STROKE_RELEASE = packageJson.version
 
 const exportBlockMapData = () => {
     const blockMapData = JSON.parse(
@@ -38,15 +38,44 @@ const updateLatestYaml = ({ sha512, size }) => {
         yml.safeDump(latestYml),
         (error) => {
             if (error) {
-                console.log(error)
+                console.error('unable to re-write latest.yml', error)
+            } else {
+                console.log('successfully re-wrote latest.yml')
             }
         }
     )
 }
 
+const readFilesToUpdate = (appZipName) => {
+    try {
+        const latestYml = fs.readFileSync(
+            path.join(__dirname, '../latest-mac.yml')
+        )
+        const appZip = fs.readFileSync(path.join(__dirname, '..', appZipName))
+
+        return {
+            latestYml,
+            appZip
+        }
+    } catch (error) {
+        console.error('Unable to open files', error)
+        return {}
+    }
+}
+
 const execute = async () => {
-    return new Promise((resolve) => {
-        updateLatestYaml(exportBlockMapData())
+    return new Promise((resolve, reject) => {
+        try {
+            updateLatestYaml(exportBlockMapData())
+        } catch (error) {
+            console.error(
+                'Unable to update latest.yml file, stopping script',
+                error
+            )
+            reject(error.message);
+            return;
+        }
+
         client.get(
             '/repos/jlf123/stroke/releases',
             (error, status, releases) => {
@@ -70,12 +99,16 @@ const execute = async () => {
 
                 // load the files that we want to update
                 const appZipName = `stroke-${STROKE_RELEASE}-mac.zip`
-                const latestYml = fs.readFileSync(
-                    path.join(__dirname, '../latest-mac.yml')
-                )
-                const appZip = fs.readFileSync(
-                    path.join(__dirname, '..', appZipName)
-                )
+
+                const { latestYml, appZip } = readFilesToUpdate(appZipName)
+
+                if (!latestYml && !appZip) {
+                    console.log('Unexpected error, stopping script')
+                    return
+                }
+
+                console.log('loaded latest.yml and app files')
+
                 client.post(
                     `/repos/jlf123/stroke/releases/${releaseToUpdate.id}/assets`,
                     {
@@ -86,6 +119,13 @@ const execute = async () => {
                     (error, status, body) => {
                         if (!error) {
                             console.log('uploaded the latest-mac.yml file')
+                        }
+
+                        if (error) {
+                            console.error(
+                                'unable to upload latest-mac.yml file',
+                                error
+                            )
                         }
                     }
                 )
@@ -106,6 +146,14 @@ const execute = async () => {
                             // this file will take longer to update so we'll end the process
                             // after this is done.
                             resolve()
+                        }
+
+                        if (error) {
+                            console.error(
+                                'unable to upload app.zip file',
+                                error
+                            )
+                            reject(error)
                         }
                     }
                 )
