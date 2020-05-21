@@ -6,7 +6,7 @@ const github = require('octonode')
 const client = github.client(process.env.GH_TOKEN)
 const path = require('path')
 const packageJson = require('../package.json')
-
+const assetUploader = require('gh-release-assets')
 const STROKE_RELEASE = packageJson.version
 
 const exportBlockMapData = () => {
@@ -46,23 +46,6 @@ const updateLatestYaml = ({ sha512, size }) => {
     )
 }
 
-const readFilesToUpdate = (appZipName) => {
-    try {
-        const latestYml = fs.readFileSync(
-            path.join(__dirname, '../latest-mac.yml')
-        )
-        const appZip = fs.readFileSync(path.join(__dirname, '..', appZipName))
-
-        return {
-            latestYml,
-            appZip
-        }
-    } catch (error) {
-        console.error('Unable to open files', error)
-        return {}
-    }
-}
-
 const execute = async () => {
     return new Promise((resolve, reject) => {
         try {
@@ -72,13 +55,17 @@ const execute = async () => {
                 'Unable to update latest.yml file, stopping script',
                 error
             )
-            reject(error.message);
-            return;
+            reject(error.message)
+            return
         }
 
         client.get(
             '/repos/jlf123/stroke/releases',
             (error, status, releases) => {
+                if (error) {
+                    console.error('unable to get the releases', error)
+                }
+
                 const releaseToUpdate = releases.find(
                     /* eslint-disable-next-line no-undef */
                     ({ name }) => {
@@ -100,61 +87,27 @@ const execute = async () => {
                 // load the files that we want to update
                 const appZipName = `stroke-${STROKE_RELEASE}-mac.zip`
 
-                const { latestYml, appZip } = readFilesToUpdate(appZipName)
-
-                if (!latestYml && !appZip) {
-                    console.log('Unexpected error, stopping script')
-                    return
-                }
-
-                console.log('loaded latest.yml and app files')
-
-                client.post(
-                    `/repos/jlf123/stroke/releases/${releaseToUpdate.id}/assets`,
+                assetUploader(
                     {
-                        query: { name: 'latest-mac.yml' },
-                        body: latestYml,
-                        headers: { 'Content-Type': 'application/x-yaml' }
+                        url: releaseToUpdate.upload_url,
+                        token: [process.env.GH_TOKEN],
+                        assets: [
+                            path.join(__dirname, '../latest-mac.yml'),
+                            path.join(__dirname, '..', appZipName)
+                        ]
                     },
-                    (error, status, body) => {
-                        if (!error) {
-                            console.log('uploaded the latest-mac.yml file')
-                        }
-
+                    (error, assets) => {
+                        console.log('successfully uploaded assets', assets)
                         if (error) {
                             console.error(
-                                'unable to upload latest-mac.yml file',
-                                error
-                            )
-                        }
-                    }
-                )
-
-                client.post(
-                    /* eslint-disable-next-line no-undef */
-                    `/repos/jlf123/stroke/releases/${releaseToUpdate.id}/assets`,
-                    {
-                        query: { name: appZipName },
-                        body: appZip,
-                        headers: { 'Content-Type': 'application/zip' }
-                    },
-
-                    (error, status, body) => {
-                        if (!error) {
-                            console.log('successfully loaded the app.zip file')
-
-                            // this file will take longer to update so we'll end the process
-                            // after this is done.
-                            resolve()
-                        }
-
-                        if (error) {
-                            console.error(
-                                'unable to upload app.zip file',
+                                'unable to upload assets to github',
                                 error
                             )
                             reject(error)
+                            return
                         }
+
+                        resolve()
                     }
                 )
             }
@@ -162,4 +115,4 @@ const execute = async () => {
     })
 }
 
-execute()
+setTimeout(() => execute(), 1000)
