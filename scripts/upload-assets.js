@@ -33,17 +33,15 @@ const updateLatestYaml = ({ sha512, size }) => {
 
     latestYml.sha512 = sha512
 
-    fs.writeFile(
-        path.join(__dirname, '../latest-mac.yml'),
-        yml.safeDump(latestYml),
-        (error) => {
-            if (error) {
-                console.error('unable to re-write latest.yml', error)
-            } else {
-                console.log('successfully re-wrote latest.yml')
-            }
-        }
-    )
+    try {
+        fs.writeFileSync(
+            path.join(__dirname, '../latest-mac.yml'),
+            yml.safeDump(latestYml)
+        )
+        console.log('successfully re-wrote latest.yml')
+    } catch (error) {
+        console.error('unable to re-write latest.yml', error)
+    }
 }
 
 const execute = async () => {
@@ -87,6 +85,8 @@ const execute = async () => {
                 // load the files that we want to update
                 const appZipName = `stroke-${STROKE_RELEASE}-mac.zip`
 
+                console.log('loaded latest.yml and app files')
+
                 assetUploader(
                     {
                         url: releaseToUpdate.upload_url,
@@ -104,7 +104,6 @@ const execute = async () => {
                                 error
                             )
                             reject(error)
-                            return
                         }
 
                         resolve()
