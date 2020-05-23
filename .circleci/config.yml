@@ -12,13 +12,19 @@ jobs:
                       - add_ssh_keys:
                             fingerprints:
                                 - '41:d6:45:5e:9d:51:19:7a:9b:80:6c:8f:30:42:af:ef'
-                      - run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
                       - run:
                           name: Use nvm for a specific node version...
                           command: |
-                              export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-                              [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-                      - run: nvm install 12.15.0
+                            set +e             
+                            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+                            export NVM_DIR="/opt/circleci/.nvm"
+                            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                            nvm install v12.15.0
+                            nvm alias default v12.15.0
+                            
+                            # Each step uses the same `$BASH_ENV`, so need to modify it
+                            echo 'export NVM_DIR="/opt/circleci/.nvm"' >> $BASH_ENV
+                            echo "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\"" >> $BASH_ENV
                       - run: yarn
                       - run: yarn build
                       - run: yarn version --patch --no-git-tag-version
