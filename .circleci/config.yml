@@ -11,20 +11,20 @@ jobs:
                 install-yarn: true
                 node-version: latest
             - run: node --version
-            - node/with-cache:
-                  steps:
-                      - add_ssh_keys:
-                            fingerprints:
-                                - '41:d6:45:5e:9d:51:19:7a:9b:80:6c:8f:30:42:af:ef'
-                      - run: yarn
-                      - run: yarn build
-                      - run: yarn version --patch --no-git-tag-version
-                      - run: yarn release
-                      - run: yarn zip
-                      - run: yarn upload:zip
-                      - run: git add package.json
-                      - run: git commit -m "[skip ci] updated version"
-                      - run: git push -u origin head
+            - node/install-packages:
+                pkg-manager: yarn
+            - add_ssh_keys:
+              fingerprints:
+                  - '41:d6:45:5e:9d:51:19:7a:9b:80:6c:8f:30:42:af:ef'
+            - run: yarn build
+            - run: yarn version --patch --no-git-tag-version
+            - run: yarn release
+            - run: yarn zip
+            - run: yarn upload:zip
+            - run: git add package.json
+            - run: git commit -m "[skip ci] updated version"
+            - run: git push -u origin head
+                      
 workflows:
     build_macos:
         jobs:
