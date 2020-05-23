@@ -13,6 +13,7 @@ jobs:
             - run: node --version
             - node/install-packages:
                 pkg-manager: yarn
+                cache-key: yarn.lock
             - add_ssh_keys:
                 fingerprints:
                   - '41:d6:45:5e:9d:51:19:7a:9b:80:6c:8f:30:42:af:ef'
