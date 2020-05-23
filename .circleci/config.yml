@@ -12,7 +12,7 @@ jobs:
             - add_ssh_keys:
                 fingerprints:
                   - "41:d6:45:5e:9d:51:19:7a:9b:80:6c:8f:30:42:af:ef"
-            - run: brew install nvm
+            - run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
             - run: nvm install
             - run: yarn
             - run: yarn build
