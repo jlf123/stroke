@@ -84,10 +84,9 @@ const execute = async () => {
 
                 // load the files that we want to update
                 const appZipName = `stroke-${STROKE_RELEASE}-mac.zip`
+                const filesToUpload = ['latest-mac.yml', appZipName]
 
-                console.log('loaded latest.yml and app files')
-
-                assetUploader(
+                const uploader = assetUploader(
                     {
                         url: releaseToUpdate.upload_url,
                         token: [process.env.GH_TOKEN],
@@ -97,7 +96,6 @@ const execute = async () => {
                         ]
                     },
                     (error, assets) => {
-                        console.log('successfully uploaded assets', assets)
                         if (error) {
                             console.error(
                                 'unable to upload assets to github',
@@ -105,10 +103,17 @@ const execute = async () => {
                             )
                             reject(error)
                         }
-
-                        resolve()
                     }
                 )
+
+                uploader.on('uploaded-asset', (fileName) => {
+                    console.log(`successfully uploaded ${fileName}`)
+                    filesToUpload.splice(filesToUpload.indexOf(fileName), 1)
+                    if (filesToUpload.length === 0) {
+                        console.log('uploaded all the files! yay!')
+                        resolve()
+                    }
+                })
             }
         )
     })
