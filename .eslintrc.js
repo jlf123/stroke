@@ -57,6 +57,6 @@ module.exports = {
         'react/no-deprecated': 'warn',
         'react/prop-types': 'error',
         'react/display-name': 'off',
-        'space-before-function-paren': ['error', 'never']
+        'space-before-function-paren': 'off'
     }
 }

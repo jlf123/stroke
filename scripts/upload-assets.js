@@ -6,8 +6,8 @@ const github = require('octonode')
 const client = github.client(process.env.GH_TOKEN)
 const path = require('path')
 const packageJson = require('../package.json')
-const assetUploader = require('gh-release-assets')
 const STROKE_RELEASE = packageJson.version
+const upload = require('./upload')
 
 const exportBlockMapData = () => {
     const blockMapData = JSON.parse(
@@ -59,7 +59,7 @@ const execute = async () => {
 
         client.get(
             '/repos/jlf123/stroke/releases',
-            (error, status, releases) => {
+            async (error, status, releases) => {
                 if (error) {
                     console.error('unable to get the releases', error)
                 }
@@ -84,39 +84,36 @@ const execute = async () => {
 
                 // load the files that we want to update
                 const appZipName = `stroke-${STROKE_RELEASE}-mac.zip`
-                const filesToUpload = ['latest-mac.yml', appZipName]
 
-                const uploader = assetUploader(
-                    {
-                        url: releaseToUpdate.upload_url,
-                        token: [process.env.GH_TOKEN],
-                        assets: [
-                            path.join(__dirname, '../latest-mac.yml'),
-                            path.join(__dirname, '..', appZipName)
-                        ]
-                    },
-                    (error, assets) => {
-                        if (error) {
-                            console.error(
-                                'unable to upload assets to github',
-                                error
-                            )
-                            reject(error)
+                await upload({
+                    url: releaseToUpdate.upload_url.replace(
+                        /({\?name,label})$/,
+                        ''
+                    ),
+                    token: process.env.GH_TOKEN,
+                    version: STROKE_RELEASE,
+                    assets: [
+                        {
+                            path: path.join(__dirname, '../latest-mac.yml'),
+                            name: 'latest-mac.yml',
+                            type: 'application/x-yaml',
+                            assetUrl: releaseToUpdate.assets.find(
+                                (asset) => asset.name === 'latest-mac.yml'
+                            ).url
+                        },
+                        {
+                            path: path.join(__dirname, '..', appZipName),
+                            name: appZipName,
+                            type: 'application/zip',
+                            assetUrl: releaseToUpdate.assets.find(
+                                (asset) => asset.name === appZipName
+                            ).url
                         }
-                    }
-                )
-
-                uploader.on('uploaded-asset', (fileName) => {
-                    console.log(`successfully uploaded ${fileName}`)
-                    filesToUpload.splice(filesToUpload.indexOf(fileName), 1)
-                    if (filesToUpload.length === 0) {
-                        console.log('uploaded all the files! yay!')
-                        resolve()
-                    }
+                    ]
                 })
             }
         )
     })
 }
 
-setTimeout(() => execute(), 1000)
+setTimeout(() => execute(), 1500)
