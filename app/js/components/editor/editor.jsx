@@ -157,7 +157,7 @@ class StrokeEditorInner extends Component {
                     contentComponents={[
                         <TitleInput
                             placeholder="Give this note a title..."
-                            value={title}
+                            defaultValue={title}
                             // tslint:disable-next-line:jsx-no-lambda
                             innerRef={this.handleTitleRef}
                             onFocus={this.handleTitleOnFocus}
