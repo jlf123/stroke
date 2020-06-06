@@ -8,9 +8,4 @@
 ```$ yarn dist```
 
 ### Deploying a release
-* Make sure you have the APPLEID and APPLIDEPASS environment variables set in env.sh. This is needed to notarize the app. This was super helpful: https://kilianvalkhof.com/2019/electron/notarizing-your-electron-application/
-* source your environment variables with `source env.sh`
-* run `yarn release`
-* set the version by running `export STROKE_RELEASE=${new-version}`
-* run `yarn zip:app`
-* run `yarn upload:zip`
+* Merges into master will automatically create a _draft_ build here: https://github.com/jlf123/stroke/releases. Find your release and publish it through the github releases UI
