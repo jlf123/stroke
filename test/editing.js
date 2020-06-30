@@ -28,7 +28,7 @@ describe('Editing Spec', function () {
 
     after(function () {
         if (this.app && this.app.isRunning()) {
-            return this.app.stop()
+            //return this.app.stop()
         }
     })
 
@@ -78,8 +78,7 @@ describe('Editing Spec', function () {
     })
 
     it('should switch to previous note', function () {
-        const previousListItemSelector =
-            'button:last-of-type[data-testid=NavigationItem]'
+        const previousListItemSelector = '.note-nav-1 button'
         return this.app.client
             .waitForVisible(previousListItemSelector)
             .click(previousListItemSelector)
