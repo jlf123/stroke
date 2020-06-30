@@ -21,6 +21,7 @@ const createWindow = () => {
                 webSecurity: false
             }
         },
+        // skip the splash screen if the tests are running
         templateUrl: `${__dirname}/build/splash-screen/index.html`,
         splashScreenOpts: {
             width: 1200,
@@ -28,17 +29,9 @@ const createWindow = () => {
         }
     }
 
-    app.whenReady().then(() => {
-        installExtension(REACT_DEVELOPER_TOOLS)
-            .then((name) => console.log(`Added Extension: ${name}`))
-            .catch((error) => console.log('An error occured:', error))
-
-        installExtension(REDUX_DEVTOOLS)
-            .then((name) => console.log(`Added Extension: ${name}`))
-            .catch((error) => console.log('An error occured:', error))
-    })
-
-    mainWindow = Splashscreen.initSplashScreen(config)
+    mainWindow = process.env.SPECTRON
+        ? new BrowserWindow({ ...config.windowOpts })
+        : Splashscreen.initSplashScreen(config)
 
     mainWindow.loadURL(
         url.format({
@@ -115,15 +108,6 @@ const createWindow = () => {
 // then we create the window
 app.on('ready', createWindow)
 
-// this event is emitted when all the windows are closed.
-// we don't quite the program for macOS, OS X applications usually
-// stay active until the user quit explicitly
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
-})
-
 // this gets triggered only on macOS, it happens when we click
 // on the application's doc or taskbar icon, if no windows exist
 // then we create one.
@@ -133,4 +117,6 @@ app.on('activate', () => {
     }
 })
 
-require('electron-debug')()
+if (!process.env.SPECTRON) {
+    require('electron-debug')()
+}

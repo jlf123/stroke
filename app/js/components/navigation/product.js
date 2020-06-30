@@ -18,7 +18,7 @@ const mapStateToProperties = (state) => ({
 })
 
 const renderNoteNav = (notes, select, onTagRoute) =>
-    notes.map((item) => (
+    notes.map((item, index) => (
         <Item
             key={item.key}
             before={EditorNoteIcon}

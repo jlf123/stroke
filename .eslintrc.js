@@ -1,17 +1,19 @@
 module.exports = {
     env: {
         browser: true,
-        es6: true
+        es6: true,
+        mocha: true
     },
     extends: [
         'eslint:recommended',
         'plugin:react/recommended',
         'prettier',
+        'jest/recommended',
         'prettier/react',
-        'plugin:jest/recommended',
         'plugin:import/react',
         'plugin:import/recommended',
-        'plugin:unicorn/recommended'
+        'plugin:unicorn/recommended',
+        'plugin:mocha/recommended'
     ],
     globals: {
         Atomics: 'readonly',
