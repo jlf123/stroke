@@ -19,16 +19,18 @@ const mapStateToProperties = (state) => ({
 
 const renderNoteNav = (notes, select, onTagRoute) =>
     notes.map((item, index) => (
-        <Item
-            key={item.key}
-            before={EditorNoteIcon}
-            text={item.title}
-            isSelected={!onTagRoute && item.active}
-            subText={snippet(item.value)}
-            onClick={() => {
-                select(item.key)
-            }}
-        />
+        <div className={`note-nav-${index}`}>
+            <Item
+                key={item.key}
+                before={EditorNoteIcon}
+                text={item.title}
+                isSelected={!onTagRoute && item.active}
+                subText={snippet(item.value)}
+                onClick={() => {
+                    select(item.key)
+                }}
+            />
+        </div>
     ))
 
 export const ProductNav = connect(mapStateToProperties, {

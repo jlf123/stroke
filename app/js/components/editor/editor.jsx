@@ -21,6 +21,7 @@ import EditorRecentIcon from '@atlaskit/icon/glyph/editor/recent'
 import { StrokeLoading } from '../loading'
 import { TagExtension } from '../tags/tag-extension'
 import { getAutoFormattingRules } from '../../util/get-autoformatting-rules'
+import StrokeTitle from './title'
 import './editor.less'
 
 export const TitleInput = styled.input`
@@ -155,22 +156,19 @@ class StrokeEditorInner extends Component {
                     )}
                     placeholder="Let's take some notes..."
                     contentComponents={[
-                        <TitleInput
-                            placeholder="Give this note a title..."
-                            defaultValue={title}
-                            // tslint:disable-next-line:jsx-no-lambda
-                            innerRef={this.handleTitleRef}
+                        <StrokeTitle
+                            title={title}
                             onFocus={this.handleTitleOnFocus}
-                            onChange={(error) =>
+                            onBlur={this.handleTitleOnBlur}
+                            activeNoteId={key}
+                            innerRef={this.handleTitleRef}
+                            onChange={(event) =>
                                 this.handleTitleOnChange(
-                                    error,
+                                    event,
                                     fabricActions,
                                     key
                                 )
                             }
-                            onBlur={this.handleTitleOnBlur}
-                            id="note-title"
-                            key="note-title"
                         />,
                         <div
                             className="stroke-date-container"

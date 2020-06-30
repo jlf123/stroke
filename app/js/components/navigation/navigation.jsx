@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import Navigation, { AkContainerNavigation } from '@atlaskit/navigation'
+import Navigation, {
+    AkContainerNavigation,
+    LayoutManager,
+    NavigationProvider
+} from '@atlaskit/navigation-next'
 import AddIcon from '@atlaskit/icon/glyph/add'
 import SearchIcon from '@atlaskit/icon/glyph/search'
 import Tooltip from '@atlaskit/tooltip'
@@ -22,7 +26,6 @@ import { connect } from 'react-redux'
 import './navigation.less'
 import _ from 'lodash'
 import TrashIcon from '@atlaskit/icon/glyph/trash'
-import { LayoutManager, NavigationProvider } from '@atlaskit/navigation-next'
 
 const GlobalCreateIcon = (props) => (
     <Tooltip position="right" content="Create">
