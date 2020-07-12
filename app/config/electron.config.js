@@ -6,7 +6,8 @@ module.exports = {
     target: 'electron-renderer',
     output: {
         path: join(__dirname, '../build'),
-        filename: 'renderer.js'
+        filename: 'renderer.js',
+        publicPath: join(__dirname, '../build/')
     },
     plugins: [
         new webpack.ProvidePlugin({
