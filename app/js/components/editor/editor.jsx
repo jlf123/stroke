@@ -22,6 +22,7 @@ import { StrokeLoading } from '../loading'
 import { TagExtension } from '../tags/tag-extension'
 import { getAutoFormattingRules } from '../../util/get-autoformatting-rules'
 import StrokeTitle from './title'
+import { AppPanel } from '../app-panel/app-panel'
 import './editor.less'
 
 export const TitleInput = styled.input`
@@ -155,6 +156,9 @@ class StrokeEditorInner extends Component {
                         fabricActions
                     )}
                     placeholder="Let's take some notes..."
+                    primaryToolbarComponents={[
+                        __flags__.APPS_ENABLED === 'true' && <AppPanel />
+                    ]}
                     contentComponents={[
                         <StrokeTitle
                             title={title}

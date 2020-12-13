@@ -49,6 +49,11 @@ const createWindow = () => {
         autoUpdater.checkForUpdatesAndNotify()
     })
 
+    mainWindow.webContents.on('new-window', function (e, url) {
+        e.preventDefault()
+        require('electron').shell.openExternal(url)
+    })
+
     const template = [
         {
             label: 'Application',

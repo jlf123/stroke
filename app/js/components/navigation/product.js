@@ -11,6 +11,7 @@ import { switchActiveNote } from '../../state/actions'
 import EditorNoteIcon from '@atlaskit/icon/glyph/editor/note'
 import snippet from '../../util/snippet'
 import PluginsView from '../plugins/plugin'
+import './navigation.less';
 
 const mapStateToProperties = (state) => ({
     notes: getSortedNotes(state),
@@ -47,17 +48,6 @@ export const ProductNav = connect(mapStateToProperties, {
         <MenuSection>
             {() => (
                 <div className="navigation-notes">
-                    {/* eslint-disable-next-line no-undef */}
-                    {__flags__.APPS_ENABLED === 'true' && (
-                        <PluginsView
-                            note={
-                                notes
-                                    ? notes.filter((note) => note.active)[0]
-                                    : {}
-                            }
-                        />
-                    )}
-
                     <GroupHeading>Notes</GroupHeading>
                     <div>
                         {notes &&

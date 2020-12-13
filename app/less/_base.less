@@ -7,6 +7,24 @@
     cursor: pointer;
 }
 
+.icon-btn {
+    background: #d8d8d8;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: box-shadow 0.5s, top 0.5s;
+    position: relative;
+
+    &:hover {
+        box-shadow: 4px 4px 10px -4px rgba(0, 0, 0, 0.64);
+        top: -1px;
+    }
+}
+
 @font-family-charliesans: 'CharlieSans';
 
 @font-face {
@@ -68,7 +86,7 @@ h3 {
 }
 
 hr {
-    border-color: #FAFBFC;
+    border-color: #fafbfc;
 }
 
 .margin-right {

@@ -93,3 +93,12 @@ export const setActiveTag = (tagName) => ({
     type: ActionTypes.SET_ACTIVE_TAG,
     tagName
 })
+
+export const openAppPopup = ({ appUrl, appName, appRef, appId, appIcon }) => ({
+    type: ActionTypes.APP_POPUP_OPENED,
+    payload: { appUrl, appName, appRef, appId, appIcon }
+})
+
+export const closeAppPopup = () => ({
+    type: ActionTypes.APP_POPUP_CLOSED
+})

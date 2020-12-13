@@ -1,31 +1,59 @@
-import React, { Component } from 'react'
-import StrokeNavigation from './components/navigation'
+import React, { useEffect, useState } from 'react'
 import Page from '@atlaskit/page'
-import '../less/_base.less'
 import { LayoutManager, NavigationProvider } from '@atlaskit/navigation-next'
 import { globalNav } from './components/navigation/global'
 import { connect } from 'react-redux'
-import { fetchUserNotesRequested } from './state/actions'
+import { fetchUserNotesRequested, closeAppPopup } from './state/actions'
 import { ProductNav } from './components/navigation/product'
 import { DeleteModal } from './components/delete'
-import { getRoute, getIsSearchDrawerOpen } from './state/selectors'
-import StrokeEditor from './components/editor'
+import {
+    getRoute,
+    getIsSearchDrawerOpen,
+    getAppPopup,
+    getActiveUserNote
+} from './state/selectors'
 import TagsContainer from './components/tags/tags'
+import StrokeEditor from './components/editor'
 import SearchDrawer from './components/search-drawer'
+import StrokePopup from './components/popup/popup'
 import { string, boolean, func } from 'prop-types'
+import '../less/_base.less'
 
 const mapStateToProperties = (state) => ({
     route: getRoute(state),
-    isSearchDrawerOpen: getIsSearchDrawerOpen(state)
+    isSearchDrawerOpen: getIsSearchDrawerOpen(state),
+    appPopup: getAppPopup(state),
+    activeNote: getActiveUserNote(state)
 })
 
-class App extends Component {
-    componentDidMount() {
-        this.props.fetchUserNotesRequested()
-    }
+const App = ({ 
+        route,
+        isSearchDrawerOpen,
+        appPopup,
+        activeNote = {},
+        closeAppPopup,
+        fetchUserNotesRequested
+    }) => {
 
-    render() {
-        const { route, isSearchDrawerOpen } = this.props
+        useEffect(() => {
+            fetchUserNotesRequested()
+        }, [])
+
+        useEffect(() => {
+            if (appPopup) {
+                window.addEventListener('keydown', closePopup)
+                return;
+            }
+
+            window.removeEventListener('keydown', closePopup);
+        }, [appPopup])
+
+        const closePopup = (event) => {
+            if (event.keyCode === 27 && appPopup) {
+                closeAppPopup();
+            }
+        }
+
         return (
             <React.Fragment>
                 <NavigationProvider>
@@ -41,6 +69,18 @@ class App extends Component {
                         >
                             {route === 'EDITOR' && <StrokeEditor />}
                             {route === 'TAGS' && <TagsContainer />}
+                            {appPopup && (
+                                <StrokePopup
+                                    container={appPopup.appRef}
+                                    title={appPopup.appName}
+                                    close={() => closeAppPopup()}
+                                    note={
+                                        activeNote[Object.keys(activeNote)[0]]
+                                    }
+                                    appUrl={appPopup.appUrl}
+                                    icon={appPopup.appIcon}
+                                />
+                            )}
                         </div>
                     </LayoutManager>
                 </NavigationProvider>
@@ -49,7 +89,6 @@ class App extends Component {
             </React.Fragment>
         )
     }
-}
 
 App.propTypes = {
     route: string,
@@ -58,5 +97,6 @@ App.propTypes = {
 }
 
 export default connect(mapStateToProperties, {
-    fetchUserNotesRequested
+    fetchUserNotesRequested,
+    closeAppPopup
 })(App)

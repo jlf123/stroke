@@ -26,8 +26,8 @@ const PluginsView = ({ note }) => {
             )
             setPlugins(plugins)
         }
-        loadApps()
-    }, [apps])
+
+    }, [apps, showPopup])
 
     return (
         <React.Fragment>
