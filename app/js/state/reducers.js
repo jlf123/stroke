@@ -48,7 +48,8 @@ const initialState = deepFreeze({
     isFetchingTags: false,
     route: 'EDITOR',
     isSearchDrawerOpen: false,
-    selectedTag: null
+    selectedTag: null,
+    appPopup: null
 })
 
 const setActiveNoteInactive = (notes) => {
@@ -230,7 +231,21 @@ const reducersByActionType = {
     [ActionType.SET_ACTIVE_TAG]: (state, { tagName }) => ({
         ...state,
         selectedTag: tagName
-    })
+    }),
+    [ActionType.APP_POPUP_OPENED]: (
+        state,
+        { payload: { appUrl, appName, appRef, appId, appIcon } }
+    ) => ({
+        ...state,
+        appPopup: {
+            appUrl,
+            appName,
+            appRef,
+            appId,
+            appIcon
+        }
+    }),
+    [ActionType.APP_POPUP_CLOSED]: (state) => ({ ...state, appPopup: null })
 }
 
 export default createReducer(reducersByActionType, initialState)

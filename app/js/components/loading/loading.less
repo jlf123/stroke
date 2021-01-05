@@ -1,6 +1,15 @@
 .stroke-loading {
     position: relative;
 
+    &__message {
+        text-align: center;
+        position: relative;
+        font-size: 35px;
+        margin-top: 15px;
+        opacity: 0;
+        animation: flash 1s ease-in-out infinite;
+    }
+
     &__stroke-icon {
         background: url(../../../images/stroke.svg);
         background-size: cover;
@@ -37,6 +46,12 @@
     100% {
         top: calc(100% + 20px);
         left: calc(100% + 20px);
+    }
+}
+
+@keyframes flash {
+    100% {
+        opacity: 1;
     }
 }
 

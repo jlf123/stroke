@@ -117,3 +117,5 @@ export const getNoteTitleAndSnippetsByActiveTag = ({ state }) => {
 }
 
 export const getSelectedTag = ({ state }) => state.selectedTag
+
+export const getAppPopup = ({ state }) => state.appPopup

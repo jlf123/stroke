@@ -42,7 +42,7 @@
         "@atlaskit/quick-search": "^7.8.5",
         "@atlaskit/renderer": "^56.0.0",
         "@atlaskit/smart-card": "^13.0.0",
-        "@atlaskit/tooltip": "^15.2.5",
+        "@atlaskit/tooltip": "^17.1.2",
         "@trodi/electron-splashscreen": "^1.0.0",
         "axios": "^0.19.2",
         "debounce": "^1.2.0",
