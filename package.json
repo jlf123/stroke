@@ -44,7 +44,7 @@
         "@atlaskit/smart-card": "^13.0.0",
         "@atlaskit/tooltip": "^17.1.2",
         "@trodi/electron-splashscreen": "^1.0.0",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "debounce": "^1.2.0",
         "deep-freeze": "0.0.1",
         "electron-debug": "^3.0.1",
