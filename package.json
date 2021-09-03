@@ -54,7 +54,7 @@
         "firebase": "^7.14.0",
         "firebase-admin": "^8.10.0",
         "history": "^4.10.1",
-        "immer": "^6.0.3",
+        "immer": "^9.0.6",
         "lodash": "^4.17.15",
         "lunr": "^2.3.8",
         "moment": "^2.24.0",
