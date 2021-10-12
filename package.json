@@ -96,7 +96,7 @@
         "concurrently": "^5.1.0",
         "css-loader": "^3.5.2",
         "devtron": "^1.4.0",
-        "electron": "^8.3.0",
+        "electron": "^11.5.0",
         "electron-builder": "^22.6.0",
         "electron-notarize": "^0.3.0",
         "electron-react-devtools": "^0.5.3",
